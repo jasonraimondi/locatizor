@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Map as LeafletMap, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map as OpenStreetMap, Marker, Popup, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 export const Map = () => {
-
   const state = {
     lat: 52,
     lng: -10,
@@ -16,10 +16,11 @@ export const Map = () => {
   };
 
   return (
-    <LeafletMap center={[state.lat, state.lng]}
-                zoom={state.zoom}
-                style={{height: 500, width: "100%"}}
-                onMoveEnd={handleMoveEnd}>
+    <OpenStreetMap center={[state.lat, state.lng]}
+                   zoom={state.zoom}
+                   style={{height: 500, width: "100%"}}
+                   onMoveEnd={handleMoveEnd}
+    >
       <Marker position={position}>
         <Popup>
           A pretty CSS3 popup. <br/> Easily customizable.
@@ -29,6 +30,6 @@ export const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
       />
-    </LeafletMap>
+    </OpenStreetMap>
   );
 };
