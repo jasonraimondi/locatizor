@@ -20,9 +20,14 @@ export const FileTree: React.FC<{ path: string }> = ({path}) => {
   if (!path) {
     return <p>Select Path</p>;
   }
-  const foo = getFiles(path).filter(isPhoto);
-  if (!foo) return <p>No Files</p>;
-  return <code style={{ fontSize: 8 }}><pre>
-    {foo.join("\n")}
-  </pre></code>;
+
+  const files = getFiles(path).filter(isPhoto);
+
+  if (!files) {
+    return <p>No Files</p>;
+  }
+
+  return <div className="grid grid-rows-4">{files.map((file, idx) => (
+    <img key={idx} src={file} alt="" className="col-span-1 inline-block"/>
+  ))}</div>;
 };

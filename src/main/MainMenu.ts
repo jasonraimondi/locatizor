@@ -102,13 +102,14 @@ if (IS_MAC_OS) {
 }
 
 if (IS_DEV_ENV) {
-  // const developerMenu = {
-  //   label: "Developer",
-  //   submenu: [
-  //     {role: "toggleDevTools"},
-  //   ],
-  // };
-  // template.push(developerMenu);
+  const developerMenu = {
+    label: "Developer",
+    submenu: [
+      {role: "toggleDevTools"},
+    ],
+  };
+  // @ts-ignore
+  template.push(developerMenu);
 }
 
 export const fileMenuTemplate = template;

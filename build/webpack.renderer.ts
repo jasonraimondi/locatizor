@@ -2,9 +2,11 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import { Configuration } from "webpack";
 import { smart } from "webpack-merge";
 
+import postCssConfig from "./postcss.config";
+
 import { baseConfig, projectRoot } from "./webpack.base";
 
-export default smart(baseConfig, {
+const Result: Configuration = smart(baseConfig, {
   target: "electron-renderer",
   entry: {
     renderer: "./src/renderer.tsx",
@@ -12,12 +14,20 @@ export default smart(baseConfig, {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {loader: "css-loader", options: {importLoaders: 1}},
+          {loader: "postcss-loader", options: {plugins: postCssConfig}},
+        ]
+      },
+      {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
             loader: "file-loader",
             options: {
-              name: "[name].[ext]",
+              name: "[name].[contentHash].[ext]",
             },
           },
         ],
@@ -33,4 +43,6 @@ export default smart(baseConfig, {
       template: projectRoot + "/index.html",
     }),
   ],
-} as Configuration);
+});
+
+export default Result;

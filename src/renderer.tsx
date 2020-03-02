@@ -1,14 +1,12 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { ipcRenderer } from "electron";
+import "@/renderer/styles/style.css";
 
-import { openLinkExternally } from "@/main/OpenLinkExternally";
+import React from "react";
+import ReactDOM from "react-dom";
+
 import { App } from "@/renderer/App";
 
-document.addEventListener("click", openLinkExternally, false);
-
 export default ReactDOM.render(
-  <App/>,
+  <App />,
   document.getElementById("app-root"),
 );
 
