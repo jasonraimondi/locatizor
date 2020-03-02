@@ -12,8 +12,7 @@ if (getClipboardText().startsWith(osmLink) && confirmation()) {
   console.log({ lat, lng });
 }
 
-export const FileSelect = () => {
-  const [path, setPath] = useState();
+export const FileSelect: React.FC<{ path: string, setPath: any }> = ({ path, setPath }) => {
   const handleClick = async () => {
     const directory = await dialog.showOpenDialog({properties: ["openDirectory"]});
     setPath(directory.filePaths[0]);

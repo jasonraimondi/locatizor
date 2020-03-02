@@ -1,9 +1,11 @@
 import { FileSelect } from "@/renderer/FileSelect";
 import { Photo } from "@/renderer/Photo";
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 export const App = () => {
+  const [path, setPath] = useState();
+
   return <Router>
     <nav className="mt-8">
       <ul>
@@ -16,7 +18,7 @@ export const App = () => {
         <Photo/>
       </Route>
       <Route path="/">
-        <FileSelect/>
+        <FileSelect path={path} setPath={setPath}/>
       </Route>
     </Switch>
   </Router>;
