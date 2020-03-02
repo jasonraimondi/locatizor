@@ -34,8 +34,21 @@ const Result: Configuration = smart(baseConfig, {
       },
       {
         test: /\.svg$/,
+        exclude: /src\/renderer\/styles/,
         use: "svg-inline-loader",
       },
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[contentHash].[ext]",
+              outputPath: "fonts/"
+            }
+          }
+        ]
+      }
     ],
   },
   plugins: [

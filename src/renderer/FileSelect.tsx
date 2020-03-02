@@ -1,5 +1,6 @@
-import { FileTree } from "@/renderer/FileTree";
 import React, { useState } from "react";
+
+import { Gallery } from "@/renderer/Gallery";
 
 const remote = window.require("electron").remote;
 const {dialog, clipboard} = remote;
@@ -22,9 +23,9 @@ export const FileSelect = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col justify-center align-center">
       <button onClick={handleClick}>Open path</button>
-      <FileTree path={path}/>
-    </>
+      <Gallery path={path}/>
+    </div>
   );
 };

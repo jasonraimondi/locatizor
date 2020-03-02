@@ -1,3 +1,5 @@
+@import url("./fonts/inter-ui/inter-ui.css");
+
 @tailwind base;
 
 @tailwind components;

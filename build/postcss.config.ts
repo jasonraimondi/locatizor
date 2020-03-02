@@ -1,3 +1,3 @@
 export default (loader) => [
-    require("tailwindcss"),
+    require("tailwindcss")("./build/tailwind.config.js"),
 ];
