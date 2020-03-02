@@ -1,17 +1,14 @@
-import React, { useState } from "react";
+import { dialog, getClipboardText } from "@/renderer/clipboard";
 
 import { Gallery } from "@/renderer/Gallery";
+import React, { useState } from "react";
 
-const remote = window.require("electron").remote;
-const {dialog, clipboard} = remote;
-
-const clipboardText = clipboard.readText();
-const confirmation = () => confirm(`Do you want me to start with the link: ${clipboardText}`);
+const confirmation = () => confirm(`Do you want me to start with the link: ${getClipboardText()}`);
 
 const osmLink = "https://www.openstreetmap.org/#map=";
 
-if (clipboardText.startsWith(osmLink) && confirmation()) {
-  const [_, lat, lng] = clipboardText.replace(osmLink, "").split("/");
+if (getClipboardText().startsWith(osmLink) && confirmation()) {
+  const [_, lat, lng] = getClipboardText().replace(osmLink, "").split("/");
   console.log({ lat, lng });
 }
 
