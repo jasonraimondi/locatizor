@@ -15,18 +15,17 @@ export const Gallery: React.FC<{ path: string }> = ({ path }) => {
   if (!files.data) {
     return <>No Files</>;
   }
+  console.log("hi");
 
   return (
     <div>
       {files.data.map((file, idx) => {
         const name = basename(file);
         return (
-          <>
-            <Link key={idx} to={`/photo/${name}`} className="flex">
-              <img src={file} alt="" className="w-24"/>
-              <div className="flex-1">Hi ya slugger</div>
-            </Link>
-          </>
+          <Link key={idx} to={encodeURI(`/photo/${name}`)} className="flex">
+            <img src={file} alt="" className="w-24"/>
+            <div className="flex-1 text-xs font-mono truncate">{name}</div>
+          </Link>
         );
       })}
     </div>

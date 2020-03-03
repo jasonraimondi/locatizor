@@ -6,7 +6,6 @@
 #app-container {
     display: grid;
     grid-template-columns: 300px 1fr;
-    grid-gap: 10px;
     height: 100%;
 }
 
@@ -15,5 +14,5 @@
 }
 
 #app-container article {
-    overflow-y: scroll;
+    overflow-y: auto;
 }

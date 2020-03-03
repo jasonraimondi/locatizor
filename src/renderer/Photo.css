@@ -1,0 +1,19 @@
+#photo-container {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50% 50%;
+}
+
+#photo-container .image {
+    display: flex;
+    justify-content: center;
+}
+
+#photo-container .details {
+    background-color: blue;
+    overflow-y: auto;
+    overflow-x: hidden;
+    word-break: normal;
+    overflow-wrap: normal;
+}

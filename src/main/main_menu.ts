@@ -73,7 +73,7 @@ const fileMenu: MenuItemConstructorOptions = {
 };
 
 const macTraverseAppMenu: MenuItemConstructorOptions = {
-  label: app.getName(),
+  label: app.name,
   submenu: [
     {role: "about"},
     // { type: 'separator' },

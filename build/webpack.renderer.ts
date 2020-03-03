@@ -18,9 +18,10 @@ const Result: Configuration = smart(baseConfig, {
     filename: "[name].[contentHash].js",
     path: projectRoot + "/dist",
   },
+  // @ts-ignore
   devServer: {
     contentBase: "/",
-    contentBasePublicPath: "/"
+    contentBasePublicPath: "/",
   },
   module: {
     rules: [

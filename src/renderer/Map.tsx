@@ -20,7 +20,7 @@ export const Map = () => {
   return (
     <OpenStreetMap center={[state.lat, state.lng]}
                    zoom={state.zoom}
-                   style={{height: 500, width: "100%"}}
+                   className="h-full w-full"
                    onMoveEnd={handleMoveEnd}
     >
       <Marker position={position}>
