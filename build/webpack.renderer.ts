@@ -1,5 +1,7 @@
 // @ts-ignore
 import HtmlWebpackPlugin from "html-webpack-plugin";
+// @ts-ignore
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import { Configuration } from "webpack";
 import { smart } from "webpack-merge";
 
@@ -21,7 +23,8 @@ const Result: Configuration = smart(baseConfig, {
       {
         test: /\.css$/,
         use: [
-          "style-loader",
+          {loader: MiniCssExtractPlugin.loader },
+          // "style-loader",
           {loader: "css-loader", options: {importLoaders: 1}},
           {loader: "postcss-loader", options: {plugins: postCssConfig}},
         ]
@@ -57,6 +60,7 @@ const Result: Configuration = smart(baseConfig, {
     ],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: projectRoot + "/index.html",
     }),
