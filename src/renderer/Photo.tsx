@@ -13,14 +13,15 @@ export const Photo = () => {
   const path = `${currentPath}/${encodeURI(photoId!)}`;
   console.log(path);
   const exifData = getExifDataForPath(path);
-  // const {
-  //   GPSLatitude,
-  //   GPSLatitudeRef,
-  //   GPSLongitude,
-  //   GPSLongitudeRef,
-  // } = exifData;
-  // console.log(GPSLatitude.description, GPSLatitudeRef.description);
-  // console.log(GPSLongitude.description, GPSLongitudeRef.description);
+  const {
+    GPSLatitude,
+    GPSLatitudeRef,
+    GPSLongitude,
+    GPSLongitudeRef,
+  } = exifData.data;
+  console.log(exifData);
+  console.log(GPSLatitude?.description, GPSLatitudeRef?.description);
+  console.log(GPSLongitude?.description, GPSLongitudeRef?.description);
 
   return <div>
     <Switch>
@@ -37,6 +38,6 @@ export const Photo = () => {
   </div>;
 };
 
-export const getExifDataForPath = (path: string): ExifData.Tags => {
+export const getExifDataForPath = (path: string): { success: boolean, data: ExifData.Tags } => {
   return ipcRenderer.sendSync("exif-from-path", path);
 };
