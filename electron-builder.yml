@@ -1,5 +1,5 @@
-appId: photo-gps.jasonraimondi.com
-productName: Traverse
+appId: app.locatizor.com
+productName: Locatizor
 copyright: Copyright © 2019 Jason Raimondi, Digital Canvas Design LLC
 
 directories:
@@ -34,7 +34,7 @@ dmg:
 
 publish:
   provider: github
-  repo: traverse
+  repo: locatizor
   owner: jasonraimondi
 
 asar: true

@@ -1,4 +1,6 @@
-# Electron Typescript Start
+# Locatizor
+
+Add Location Data to Photos
 
 ## Stack
 
