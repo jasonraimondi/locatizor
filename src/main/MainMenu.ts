@@ -1,9 +1,8 @@
-import { app, Menu, MenuItemConstructorOptions, shell } from "electron";
-import * as findKey from "lodash.findkey";
-
 import { IS_DEV_ENV, IS_MAC_OS } from "@/environment";
 import { openMainWindow, reloadAllWindows } from "@/main";
 import { ElectronSettingService } from "@/main/SettingsService";
+import { app, Menu, MenuItemConstructorOptions } from "electron";
+import findKey from "lodash.findkey";
 
 const editMenu: MenuItemConstructorOptions = {
   label: "Edit",
@@ -98,7 +97,7 @@ if (IS_MAC_OS) {
   template.unshift(fileMenu);
   template.unshift(macTraverseAppMenu);
   const windowMenuKey = findKey(template, (menuItem: MenuItemConstructorOptions) => menuItem.role === "window");
-  template[windowMenuKey].submenu = windowMenuMacSubmenu;
+  template[windowMenuKey as any].submenu = windowMenuMacSubmenu;
 }
 
 if (IS_DEV_ENV) {

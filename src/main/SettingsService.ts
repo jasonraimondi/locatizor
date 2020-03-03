@@ -1,4 +1,4 @@
-import * as settings from "electron-settings";
+import settings from "electron-settings";
 
 interface JsonObject {
   [x: string]: JsonValue;
@@ -13,19 +13,19 @@ export class ElectronSettingService {
     return settings.has(keyPath);
   }
 
-  static set<T>(keyPath: string, value: JsonValue | T | any, options?): void {
+  static set<T>(keyPath: string, value: JsonValue | T | any, options?: any): void {
     settings.set(keyPath, value, options);
   }
 
-  static get<T>(keyPath: string, defaultValue?: any, options?): T | any {
+  static get<T>(keyPath: string, defaultValue?: any, options?: any): T | any {
     return settings.get(keyPath, defaultValue, options);
   }
 
-  static delete(keyPath: string, options?): void {
+  static delete(keyPath: string, options?: any): void {
     settings.delete(keyPath, options);
   }
 
-  static deleteAll(options?): void {
+  static deleteAll(options?: any): void {
     settings.deleteAll(options);
   }
 

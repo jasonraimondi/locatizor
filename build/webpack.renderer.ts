@@ -1,3 +1,4 @@
+// @ts-ignore
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { Configuration } from "webpack";
 import { smart } from "webpack-merge";

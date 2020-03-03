@@ -1,10 +1,9 @@
 // tslint:disable-next-line:no-var-requires
 require("dotenv").config();
 
-import {resolve} from "path";
+import { resolve } from "path";
 import createStyledComponentsTransformer from "typescript-plugin-styled-components";
-import * as webpack from "webpack";
-import {Configuration} from "webpack";
+import webpack, { Configuration } from "webpack";
 
 export const devMode = process.env.NODE_ENV !== "production";
 export const projectRoot = resolve(__dirname, "../");
@@ -16,7 +15,6 @@ export const baseConfig: Configuration = {
   devtool: devMode ? "cheap-module-eval-source-map" : false,
   context: projectRoot,
   output: {
-    // filename: "[name].[contentHash].js",
     path: projectRoot + "/dist",
   },
   resolve: {

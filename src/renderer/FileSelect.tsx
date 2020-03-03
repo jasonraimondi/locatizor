@@ -3,14 +3,14 @@ import { Button } from "@/renderer/elements/Button";
 import { dialog, getClipboardText } from "@/renderer/elements/clipboard";
 
 import { Gallery } from "@/renderer/Gallery";
-import React, { useState } from "react";
+import React from "react";
 
 const confirmation = () => confirm(`Do you want me to start with the link: ${getClipboardText()}`);
 
 const osmLink = "https://www.openstreetmap.org/#map=";
 
 if (getClipboardText().startsWith(osmLink) && confirmation()) {
-  const [_, lat, lng] = getClipboardText().replace(osmLink, "").split("/");
+  const [, lat, lng] = getClipboardText().replace(osmLink, "").split("/");
   console.log({ lat, lng });
 }
 

@@ -1,6 +1,6 @@
-import { BrowserWindow, BrowserWindowConstructorOptions, dialog, screen } from "electron";
+import { BrowserWindow, BrowserWindowConstructorOptions, screen } from "electron";
 import { autoUpdater } from "electron-updater";
-import * as merge from "lodash.merge";
+import merge from "lodash.merge";
 import { join } from "path";
 import { format } from "url";
 
@@ -9,7 +9,7 @@ import { ElectronSettingService } from "@/main/SettingsService";
 
 export class WindowManager {
   private readonly DEFAULT_OPTIONS: BrowserWindowConstructorOptions = {
-    title: "Traverse",
+    title: "Photo Life",
     width: 600,
     height: 900,
     frame: false,
@@ -23,7 +23,7 @@ export class WindowManager {
     },
   };
   private windows: Map<string, BrowserWindow> = new Map();
-  private settingsWindow: BrowserWindow = null;
+  // private settingsWindow: BrowserWindow = null;
 
   private mainWindowUrl = format({
     pathname: join(__dirname, "index.html"),
@@ -43,7 +43,7 @@ export class WindowManager {
   }
 
   reloadAll() {
-    this.windows.forEach((window: BrowserWindow, id: string) => {
+    this.windows.forEach((window: BrowserWindow, _id: string) => {
       window.loadURL(this.mainWindowUrl);
     });
   }
@@ -66,7 +66,7 @@ export class WindowManager {
       baseOptions.y = this.lastWindow.getBounds().y;
     }
 
-    if (height > baseOptions.height) {
+    if (height > (baseOptions.height ?? 0)) {
       baseOptions.height = 900;
       baseOptions.width = 700;
     }
@@ -113,7 +113,7 @@ export class WindowManager {
     return ids;
   }
 
-  private get lastWindow(): BrowserWindow | null {
+  private get lastWindow(): BrowserWindow | undefined {
     return this.windows.get(this.windowKeys[this.windowKeys.length - 1]);
   }
 }

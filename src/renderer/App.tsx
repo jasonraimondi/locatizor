@@ -1,7 +1,8 @@
+import React from "react";
+import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
+
 import { FileSelect } from "@/renderer/FileSelect";
 import { Photo } from "@/renderer/Photo";
-import React, { createContext, useState } from "react";
-import { BrowserRouter as Router, Link, Route, Switch } from "react-router-dom";
 
 export const App = () => {
 
