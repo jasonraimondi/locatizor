@@ -1,4 +1,4 @@
-import installExtension, { REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS } from "electron-devtools-installer";
+import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 
 export const IS_MAC_OS = process.platform === "darwin";
 

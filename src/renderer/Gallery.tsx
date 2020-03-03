@@ -23,7 +23,7 @@ export const Gallery: React.FC<{ path: string }> = ({path}) => {
   const match = useRouteMatch();
 
   if (!path) {
-    return <p>BLANK</p>;
+    return <>Open a path to see something</>;
   }
 
   const files = getFiles(path);

@@ -16,6 +16,7 @@ export const baseConfig: Configuration = {
   devtool: devMode ? "cheap-module-eval-source-map" : false,
   context: projectRoot,
   output: {
+    // filename: "[name].[contentHash].js",
     path: projectRoot + "/dist",
   },
   resolve: {

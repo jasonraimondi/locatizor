@@ -1,4 +1,6 @@
-import { dialog, getClipboardText } from "@/renderer/clipboard";
+import { useCurrentPath } from "@/renderer/providers/currentPath";
+import { Button } from "@/renderer/elements/Button";
+import { dialog, getClipboardText } from "@/renderer/elements/clipboard";
 
 import { Gallery } from "@/renderer/Gallery";
 import React, { useState } from "react";
@@ -12,16 +14,18 @@ if (getClipboardText().startsWith(osmLink) && confirmation()) {
   console.log({ lat, lng });
 }
 
-export const FileSelect: React.FC<{ path: string, setPath: any }> = ({ path, setPath }) => {
+export const FileSelect: React.FC = () => {
+  const { currentPath, setCurrentPath } = useCurrentPath();
+
   const handleClick = async () => {
     const directory = await dialog.showOpenDialog({properties: ["openDirectory"]});
-    setPath(directory.filePaths[0]);
+    setCurrentPath(directory.filePaths[0]);
   };
 
   return (
     <div className="flex flex-col justify-center align-center">
-      <button onClick={handleClick}>Open path</button>
-      <Gallery path={path}/>
+      <Button onClick={handleClick}>Open path</Button>
+      <Gallery path={currentPath}/>
     </div>
   );
 };
