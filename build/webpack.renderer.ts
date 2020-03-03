@@ -12,6 +12,10 @@ const Result: Configuration = smart(baseConfig, {
   entry: {
     renderer: "./src/renderer.tsx",
   },
+  output: {
+    filename: "[name].[contentHash].js",
+    path: projectRoot + "/dist",
+  },
   module: {
     rules: [
       {
