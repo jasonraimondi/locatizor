@@ -11,7 +11,7 @@ export const Photo = () => {
   const match = useRouteMatch();
   const { photoId } = useParams();
   const path = `${currentPath}/${encodeURI(photoId!)}`;
-  const exifData = useMemo(() => getExifDataForPath(path), [path])
+  const exifData = useMemo(() => getExifDataForPath(path), [path]);
   const {
     GPSLatitude,
     GPSLatitudeRef,
