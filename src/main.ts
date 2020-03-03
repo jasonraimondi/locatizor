@@ -1,9 +1,9 @@
 declare var env: {};
 
-import { installExtensions, IS_DEV_ENV, IS_MAC_OS } from "@/environment";
-import { WindowManager } from "@/main/WindowManager";
 import { app, Menu } from "electron";
 
+import { installExtensions, IS_DEV_ENV, IS_MAC_OS } from "@/environment";
+import { WindowManager } from "@/main/window_manager";
 const windowManager: WindowManager = new WindowManager();
 
 export function openMainWindow() {
@@ -15,7 +15,7 @@ export function reloadAllWindows() {
 }
 
 app.on("ready", async () => {
-  const { fileMenuTemplate } = await import("@/main/MainMenu");
+  const { fileMenuTemplate } = await import("@/main/main_menu");
   Menu.setApplicationMenu(Menu.buildFromTemplate(fileMenuTemplate));
   openMainWindow();
   if (IS_DEV_ENV) {

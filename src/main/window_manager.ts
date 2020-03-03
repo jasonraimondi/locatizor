@@ -5,12 +5,12 @@ import { join } from "path";
 import { format } from "url";
 
 import { IS_DEV_ENV } from "@/environment";
-import { ElectronSettingService } from "@/main/SettingsService";
+import { ElectronSettingService } from "@/main/settings_service";
 
 export class WindowManager {
   private readonly DEFAULT_OPTIONS: BrowserWindowConstructorOptions = {
     title: "Photo Life",
-    width: 600,
+    width: 1440,
     height: 900,
     frame: false,
     titleBarStyle: "hidden",
@@ -66,7 +66,7 @@ export class WindowManager {
       baseOptions.y = this.lastWindow.getBounds().y;
     }
 
-    if (height > (baseOptions.height ?? 0)) {
+    if (height < (baseOptions.height ?? 0)) {
       baseOptions.height = 900;
       baseOptions.width = 700;
     }
