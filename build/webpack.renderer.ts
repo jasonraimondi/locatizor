@@ -18,15 +18,19 @@ const Result: Configuration = smart(baseConfig, {
     filename: "[name].[contentHash].js",
     path: projectRoot + "/dist",
   },
+  devServer: {
+    contentBase: "/",
+    contentBasePublicPath: "/"
+  },
   module: {
     rules: [
       {
         test: /\.css$/,
         use: [
-          {loader: MiniCssExtractPlugin.loader },
+          { loader: MiniCssExtractPlugin.loader },
           // "style-loader",
-          {loader: "css-loader", options: {importLoaders: 1}},
-          {loader: "postcss-loader", options: {plugins: postCssConfig}},
+          { loader: "css-loader", options: { importLoaders: 1 } },
+          { loader: "postcss-loader", options: { plugins: postCssConfig } },
         ]
       },
       {
