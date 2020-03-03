@@ -1,0 +1,4 @@
+.button {
+    display: inline-block;
+    @apply .bg-blue-500 .p-4;
+}
