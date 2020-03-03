@@ -1,8 +1,8 @@
 {
-  "name": "traverse",
+  "name": "locatizor",
   "author": "Jason Raimondi <jason@raimondi.us>",
-  "description": "Traverse is a GitHub explorer. You can browse repositories trending by frequency and language.",
-  "version": "0.10.12",
+  "description": "Locatizor is a tool to set location data on photos",
+  "version": "0.0.0",
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
