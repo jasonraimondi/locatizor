@@ -4,6 +4,9 @@ import { app, Menu } from "electron";
 
 import { installExtensions, IS_DEV_ENV, IS_MAC_OS } from "@/environment";
 import { WindowManager } from "@/main/window_manager";
+
+import "@/main/listeners/exif_from_path";
+
 const windowManager: WindowManager = new WindowManager();
 
 export function openMainWindow() {

@@ -1,9 +1,9 @@
-import "./Gallery.css";
-
 import { lstatSync, readdirSync } from "fs";
 import { basename, join } from "path";
-import { Link, useRouteMatch } from "react-router-dom";
 import React from "react";
+import { Link } from "react-router-dom";
+
+import "./Gallery.css";
 
 const isFile = (source: string) => !lstatSync(source).isDirectory();
 const getFiles = (source: string) => readdirSync(source).map(name => join(source, name)).filter(isFile).filter(isPhoto);
@@ -20,8 +20,6 @@ const photoRegex = new RegExp(photoExtensions.join("|"), "i");
 const isPhoto = (file: string) => photoRegex.test(file);
 
 export const Gallery: React.FC<{ path: string }> = ({path}) => {
-  const match = useRouteMatch();
-
   if (!path) {
     return <>Open a path to see something</>;
   }
@@ -37,7 +35,7 @@ export const Gallery: React.FC<{ path: string }> = ({path}) => {
       {files.map((file, idx) => {
         const name = basename(file);
         return (
-          <Link key={idx} to={`${match.path}/photo/${name}`}>
+          <Link key={idx} to={`/photo/${name}`}>
             <img src={file} alt="" className="col-span-1 inline-block"/>
           </Link>
         );
