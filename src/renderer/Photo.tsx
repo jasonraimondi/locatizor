@@ -12,13 +12,13 @@ export const Photo = () => {
   const { photoId } = useParams();
   const path = `${currentPath}/${encodeURI(photoId!)}`;
   console.log(path);
+  const exifData = getExifDataForPath(path);
   // const {
   //   GPSLatitude,
   //   GPSLatitudeRef,
   //   GPSLongitude,
   //   GPSLongitudeRef,
-  // } = getExifDataForPath(path);
-  //
+  // } = exifData;
   // console.log(GPSLatitude.description, GPSLatitudeRef.description);
   // console.log(GPSLongitude.description, GPSLongitudeRef.description);
 
@@ -33,6 +33,7 @@ export const Photo = () => {
     </Switch>
     <Link to={`${match.path}/maps`} className="button">Map</Link>
     <h3>Requested topic ID: {photoId}</h3>
+    <div>{JSON.stringify(exifData, null, 2)}</div>
   </div>;
 };
 

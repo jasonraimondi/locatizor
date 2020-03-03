@@ -1,0 +1,19 @@
+#app-root {
+    height: 100%;
+    width: 100%;
+}
+
+#app-container {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-gap: 10px;
+    height: 100%;
+}
+
+#app-container aside {
+    @apply .bg-blue-500;
+}
+
+#app-container article {
+    overflow-y: scroll;
+}
