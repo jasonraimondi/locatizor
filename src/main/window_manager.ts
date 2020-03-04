@@ -1,11 +1,13 @@
 import { BrowserWindow, BrowserWindowConstructorOptions, screen } from "electron";
 import { autoUpdater } from "electron-updater";
 import merge from "lodash.merge";
-// import { join } from "path";
+import { join } from "path";
 import { format } from "url";
 
 import { IS_DEV_ENV } from "@/environment";
 import { ElectronSettingService } from "@/main/settings_service";
+
+console.log("NODE ENV", process.env.NODE_ENV);
 
 export class WindowManager {
   private readonly DEFAULT_OPTIONS: BrowserWindowConstructorOptions = {
@@ -25,12 +27,11 @@ export class WindowManager {
   private windows: Map<string, BrowserWindow> = new Map();
   // private settingsWindow: BrowserWindow = null;
 
-  // private mainWindowUrl = format({
-  //   pathname: join(__dirname, "index.html"),
-  //   protocol: "file:",
-  //   slashes: true,
-  // });
-  private mainWindowUrl = format(new URL("http://localhost:8080"));
+  private mainWindowUrl = IS_DEV_ENV ? format(new URL("http://localhost:8080")) : format({
+    pathname: join(__dirname, "index.html"),
+    protocol: "file:",
+    slashes: true,
+  });
 
   constructor() {
     autoUpdater.checkForUpdatesAndNotify();
