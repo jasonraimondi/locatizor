@@ -6,15 +6,25 @@
 #app-container {
     display: grid;
     grid-template-columns: 300px 1fr;
-    grid-template-rows: 100%;
+    grid-template-rows: 40px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
     height: 100%;
+}
+
+#app-container header {
+    grid-area: header;
+    -webkit-app-region: drag;
+    @apply .bg-gray-600;
 }
 
 #app-container aside {
-    height: 100%;
-    @apply .bg-blue-500;
+    grid-area: sidebar;
+    @apply .bg-gray-300;
 }
 
 #app-container article {
+    grid-area: main;
     overflow-y: auto;
 }

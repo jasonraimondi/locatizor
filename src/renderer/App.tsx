@@ -13,7 +13,7 @@ export const App: React.FC = () => {
           <Photo/>
         </Route>
         <Route path="/">
-          <div>List of saved paths</div>
+          <div className="flex items-center justify-center h-full">List of saved paths</div>
         </Route>
       </Switch>
     </Layout>

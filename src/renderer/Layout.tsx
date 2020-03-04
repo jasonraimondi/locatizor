@@ -9,12 +9,15 @@ export const Layout: React.FC = ({ children }) => {
   const { handleOpenDirectory } = useCurrentPath();
 
   return <div id="app-container">
+    <header/>
     <aside className="flex flex-col">
       <nav className="mt-8">
         <ul className="flex">
-          <li><Link className="button" to="/">Home</Link></li>
-          <li><Link className="button" to="/photo/2">Two</Link></li>
-          <li><Button onClick={handleOpenDirectory}>Open path</Button></li>
+          <li className="flex-1 self-center"><Link className="button w-full h-full" to="/">Home</Link></li>
+          <li className="flex-1 self-center"><Link className="button w-full h-full" to="/photo/2">Two</Link></li>
+          <li className="flex-1 self-center">
+            <Button className="w-full" onClick={handleOpenDirectory}>Open</Button>
+          </li>
         </ul>
       </nav>
       <div className="flex flex-col justify-center align-center overflow-y-auto">
