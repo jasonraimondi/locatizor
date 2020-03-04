@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rm -rf coverage/* dist/* dist-build/*",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "prestart": "run-s clean webpack:main-dev",
     "start": "run-p webpack:renderer-serve serve",
     "serve": "electron ./dist",
