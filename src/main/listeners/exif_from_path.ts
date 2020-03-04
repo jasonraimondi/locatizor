@@ -19,10 +19,15 @@ ipcMain.on("exif-from-path", (event, arg) => {
         success: true,
         data: exifData
       };
-    } catch (error) {
-      if (error instanceof ExifReader.errors.MetadataMissingError) {
+    } catch (e) {
+      if (e instanceof ExifReader.errors.MetadataMissingError) {
         console.log("No Exif data found", arg);
       }
+      event.returnValue = {
+        success: false,
+        data: {},
+        message: e.message,
+      };
     }
   });
 });
