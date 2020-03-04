@@ -1,9 +1,11 @@
 import { basename } from "path";
 import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
 import { ipcRenderer } from "electron";
+// import VisibilitySensor from "react-visibility-sensor";
 
 import "./Gallery.css";
-import { Link } from "react-router-dom";
+// import { Image } from "@/renderer/elements/Image";
 
 export const Gallery: React.FC<{ path: string }> = ({ path }) => {
   if (!path) {
@@ -15,23 +17,31 @@ export const Gallery: React.FC<{ path: string }> = ({ path }) => {
   if (!files.data) {
     return <>No Files</>;
   }
-  console.log("hi");
 
   return (
-    <div>
+    <>
       {files.data.map((file, idx) => {
         const name = basename(file);
         return (
           <Link key={idx} to={encodeURI(`/photo/${name}`)} className="flex">
-            <img src={file} alt="" className="w-24"/>
+            {/*<div className="w-24 h-24">*/}
+              {/*<VisibilitySensor>*/}
+              {/*  <Image src={file} className="max-w-full h-full"/>*/}
+              {/*</VisibilitySensor>*/}
+            {/*</div>*/}
             <div className="flex-1 text-xs font-mono truncate">{name}</div>
           </Link>
         );
       })}
-    </div>
+    </>
   );
 };
 
-export const getFilesForPath = (path: string): { success: boolean, data: string[] } => {
+export type IPCResponseType<T = any> = {
+  success: boolean;
+  data: T;
+}
+
+export const getFilesForPath = (path: string): IPCResponseType<string[]> => {
   return ipcRenderer.sendSync("files-from-path", { path });
 };

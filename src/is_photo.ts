@@ -1,4 +1,6 @@
 const photoExtensions = [
+  ".PNG",
+  ".TIFF",
   ".JPG",
   ".JPEG",
   ".NEF",

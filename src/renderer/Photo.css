@@ -6,12 +6,21 @@
 }
 
 #photo-container .image {
+    @apply .bg-gray-600;
     display: flex;
     justify-content: center;
 }
 
+.contain-image {
+    @apply .shadow-2xl;
+    object-fit: contain;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 #photo-container .details {
-    background-color: blue;
+    @apply .bg-blue-100;
     overflow-y: auto;
     overflow-x: hidden;
     word-break: normal;

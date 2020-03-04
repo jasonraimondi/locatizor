@@ -12,7 +12,7 @@ export const Image: React.FC<Props> = ({ src, className = "", ...props }) => {
     <Img
       src={[src, `/${DEFAULT_IMAGE.default}`]}
       alt={src}
-      className={className.concat("block h-full")}
+      className={className.concat("")}
       {...props}
     />
   );
