@@ -12,10 +12,24 @@ export const Photo = () => {
   const { currentPath } = useCurrentPath();
   const match = useRouteMatch();
   const { photoId } = useParams();
-  const path = `${currentPath}/${encodeURI(photoId!)}`;
-  const exifData = useMemo(() => getExifDataForPath(path), [path]);
+  const path = `${currentPath}/${photoId!}`;
+  const { data } = useMemo(() => getExifDataForPath(path), [path]);
 
-  console.log(exifData.data);
+  console.log(data);
+
+  const list = () => {
+    return Object.keys(exifParseList).map((displayValue, idx) => {
+      // @ts-ignore
+      const exifMatch = exifParseList[displayValue];
+      const [prop] = exifMatch.fields.filter((res: string) => {
+        return data.hasOwnProperty(res);
+      });
+      if (prop) {
+        return <p key={idx}><strong>{displayValue}</strong>: {exifMatch.format(data[prop])}</p>;
+      }
+      return;
+    });
+  };
 
   return <div id="photo-container">
     <div className="image">
@@ -24,7 +38,7 @@ export const Photo = () => {
           <Map/>
         </Route>
         <Route path={`${match.path}/`}>
-          <Image src={path}/>
+          <Image src={path} className="contain-image" />
         </Route>
       </Switch>
     </div>
@@ -34,17 +48,47 @@ export const Photo = () => {
         <li><Link to={`${match.url}/map`} className="button">Map</Link></li>
       </ul>
       <div>
-        <p><strong>Filename:</strong> {photoId}</p>
-        {exifData.data.ImageWidth ??
-        <p><strong>ImageWidth:</strong> {JSON.stringify(exifData.data.ImageWidth)}</p>}
-        {exifData.data.ImageLength ??
-        <p><strong>ImageHeight:</strong> {JSON.stringify(exifData.data.ImageLength)}</p>}
+        {list()}
       </div>
     </div>
   </div>;
 };
 
-export const getExifDataForPath = (path: string): { success: boolean, data: ExifData.Tags } => {
+export type ExifDataType = ExifData.Tags | any
+
+export const getExifDataForPath = (path: string): { success: boolean, data: ExifDataType } => {
   console.log({ path });
   return ipcRenderer.sendSync("exif-from-path", path);
+};
+
+export type ExifParser = {
+  fields: string[];
+  format(str: { value: any; description: string }): string | number;
+}
+
+export const exifParseList: { [displayValue: string]: ExifParser } = {
+  Height: {
+    fields: ["Image Height", "ImageHeight"],
+    format: ({ value }) => value ? `${value}px` : "Unknown"
+  },
+  Width: {
+    fields: ["Image Width", "ImageWidth"],
+    format: ({ value }) => value ? `${value}px` : "Unknown"
+  },
+  "Latitude Ref": {
+    fields: ["GPSLatitudeRef"],
+    format: ({ description }) => description,
+  },
+  Latitude: {
+    fields: ["GPSLatitude"],
+    format: ({ description }) => description,
+  },
+  "Longitude Ref": {
+    fields: ["GPSLongitudeRef"],
+    format: ({ description }) => description,
+  },
+  Longitude: {
+    fields: ["GPSLongitude"],
+    format: ({ description }) => description,
+  }
 };
