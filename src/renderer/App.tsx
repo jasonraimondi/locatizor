@@ -1,9 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Photo } from "@/renderer/Photo";
 
 import "./App.css";
+import { Photo } from "@/renderer/Photo/Photo";
 import { Layout } from "./Layout";
+
+console.log("data");
+console.log("data");
+console.log("data");
 
 export const App: React.FC = () => {
   return <Router>
