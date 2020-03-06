@@ -6,6 +6,7 @@
   "license": "MIT",
   "main": "dist/index.js",
   "scripts": {
+    "postversion": "run-s publish",
     "clean": "rm -rf coverage/* dist/* dist-build/*",
     "test": "jest --passWithNoTests",
     "prestart": "run-s clean webpack:main-dev",
