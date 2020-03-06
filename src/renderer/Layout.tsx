@@ -5,6 +5,8 @@ import { FileSelect } from "@/renderer/FileSelect";
 import { useCurrentPath } from "./providers/currentPath";
 import { Button } from "./elements/Button";
 
+import "./Layout.css";
+
 export const Layout: React.FC = ({ children }) => {
   const { handleOpenDirectory } = useCurrentPath();
 

@@ -21,6 +21,7 @@
 
 #app-container aside {
     grid-area: sidebar;
+    overflow-y: auto;
     @apply .bg-gray-300;
 }
 

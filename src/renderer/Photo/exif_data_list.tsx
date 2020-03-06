@@ -1,26 +1,35 @@
 import { ipcRenderer } from "electron";
 import ExifData from "exifreader";
 
-export type TYPE_TEST = ExifData.Tags | any
+export type ExifTagsType = ExifData.Tags | any
 
-export type VALUE_TAGS = ExifData.ValueTag;
+export type ExifValueType = ExifData.ValueTag;
 
-export const getExifDataForPath = (path: string): TYPE_TEST => {
+export const getExifDataForPath = (path: string): ExifTagsType => {
   const { success, data, message } = ipcRenderer.sendSync("exif-from-path", path);
   if (!success) {
     console.error(message);
     return {};
   }
 
-  return data;
+  return formatData(data);
+};
+
+export const exifMatchList = {
+  height: ["Image Height", "ImageHeight"],
+  width: ["Image Width", "ImageWidth"],
+  latitudeRef: ["GPSLatitudeRef"],
+  latitude: ["GPSLatitude"],
+  longitudeRef: ["GPSLongitudeRef"],
+  longitude: ["GPSLongitude"],
 };
 
 export type ExifParser = {
   title: string;
   format(): string | number;
 }
-
-export const exifFormatter: { [displayValue: string]: SOMETHING } = {
+const digits = /[^0-9$.,]/g;
+export const exifValues: { [displayValue: string]: SOMETHING } = {
   height: ({ value }) => ({
     title: "Height",
     format: () => Number(value) ?? value.toString(),
@@ -35,39 +44,30 @@ export const exifFormatter: { [displayValue: string]: SOMETHING } = {
   }),
   latitude: ({ description }) => ({
     title: "Latitude",
-    format: () => description,
+    format: () => Number(description.replace(digits, "")),
   }),
   longitudeRef: ({ description }) => ({
     title: "Longitude Ref",
     format: () => description,
   }),
   longitude: ({ description }) => ({
-      title: "Longitude",
-      format: () => description,
+    title: "Longitude",
+    format: () => Number(description.replace(digits, "")) * -1,
   }),
 };
 
-export type SOMETHING = (field: VALUE_TAGS) => ExifParser;
-export type FORMAT_DATA = { [key in VALID_EXIF]: VALUE_TAGS };
-export type FORMAT_DATA_SOMETHING = { [key in VALID_EXIF]: ExifParser };
+export type SOMETHING = (field: ExifValueType) => ExifParser;
+export type ExifDataFormat_SOMETHING = { [key in ValidExifFields]: ExifValueType };
+export type FORMAT_DATA_SOMETHING = { [key in ValidExifFields]: ExifParser };
 
-export const exifMatchList = {
-  height: ["Image Height", "ImageHeight"],
-  width: ["Image Width", "ImageWidth"],
-  latitudeRef: ["GPSLatitudeRef"],
-  latitude: ["GPSLatitude"],
-  longitudeRef: ["GPSLongitudeRef"],
-  longitude: ["GPSLongitude"],
-};
-
-export type VALID_EXIF = "height" | "width" |
+export type ValidExifFields = "height" | "width" |
   "latitudeRef" |
   "latitude" |
   "longitudeRef" |
   "longitude";
 
-export const formatData = (data: any): Partial<FORMAT_DATA> => {
-  const result: Partial<FORMAT_DATA> = {};
+export const formatData = (data: any): Partial<ExifDataFormat_SOMETHING> => {
+  const result: Partial<ExifDataFormat_SOMETHING> = {};
   for (const key in exifMatchList) {
     if (exifMatchList.hasOwnProperty(key)) {
       // @ts-ignore

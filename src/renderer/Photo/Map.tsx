@@ -4,24 +4,27 @@ import { LatLngTuple } from "leaflet";
 import React, { useState } from "react";
 import { Map as OpenStreetMap, Marker, Popup, TileLayer } from "react-leaflet";
 
-export const Map = () => {
-  const state = {
-    lat: 52,
-    lng: -10,
-    zoom: 12,
-  };
-  const [position, setPosition] = useState<LatLngTuple>([state.lat, state.lng]);
+type Prop = {
+  lat: number;
+  lng: number;
+  zoom?: number;
+};
 
-  const handleMoveEnd = ({target}: any) => {
-    const {lat, lng} = target.getCenter();
-    setPosition([lat, lng]);
+export const Map: React.FC<Prop> = ({ lat, lng, zoom = 12 }) => {
+  const [position, setPosition] = useState<LatLngTuple>([lat, lng]);
+
+  const handleMoveEnd = ({ target }: any) => {
+    const center = target.getCenter();
+    setPosition([center.lat, center.lng]);
+    console.log(position);
   };
 
   return (
-    <OpenStreetMap center={[state.lat, state.lng]}
-                   zoom={state.zoom}
-                   className="h-full w-full"
-                   onMoveEnd={handleMoveEnd}
+    <OpenStreetMap
+      center={[lat, lng]}
+      zoom={zoom}
+      className="h-full w-full"
+      onMoveEnd={handleMoveEnd}
     >
       <Marker position={position}>
         <Popup>

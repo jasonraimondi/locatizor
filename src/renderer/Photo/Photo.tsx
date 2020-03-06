@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 
-import { Map } from "./Map";
 import { useCurrentPath } from "@/renderer/providers/currentPath";
 import { Image } from "@/renderer/elements/Image";
 import "./Photo.css";
 import { ExifDataProvider, useExifData } from "./use_exif_data";
+import { MapLayout } from "./MapLayout";
 
 export const Photo = () => {
   const { currentPath } = useCurrentPath();
@@ -18,7 +18,7 @@ export const Photo = () => {
       <div className="image">
         <Switch>
           <Route path={`${match.path}/map`}>
-            <Map/>
+            <MapLayout/>
           </Route>
           <Route path={`${match.path}/`}>
             <Image src={path} className="contain-image"/>
@@ -37,11 +37,13 @@ export const Photo = () => {
 };
 
 export const ExifData = () => {
-  const { foo }: any = useExifData();
-  const foos = Object.keys(foo);
+  const { exifData }: any = useExifData();
+  const datas = Object.keys(exifData);
+    console.log(exifData.longitude.format());
+
   return <>
-    {foos.map((f) => {
-      return <p key={f}><strong>{foo[f].title}</strong>: {foo[f].format()}</p>;
+    {datas.map((f) => {
+      return <p key={f}><strong>{exifData[f].title}</strong>: {exifData[f].format()}</p>;
     })}
   </>;
 };
