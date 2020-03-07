@@ -23,7 +23,7 @@ export const Gallery: React.FC<{ path: string }> = ({ path }) => {
       {files.data.map((file, idx) => {
         const name = basename(file);
         return (
-          <Link key={idx} to={encodeURI(`/photo/${name}`)} className="flex">
+          <Link key={idx} to={encodeURI(`/photo/${name}`)} className="flex hover:bg-blue-200">
             {/*<div className="w-24 h-24">*/}
               {/*<VisibilitySensor>*/}
               {/*  <Image src={file} className="max-w-full h-full"/>*/}

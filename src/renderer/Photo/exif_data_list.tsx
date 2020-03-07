@@ -7,6 +7,7 @@ export type ExifValueType = ExifData.ValueTag;
 
 export const getExifDataForPath = (path: string): ExifTagsType => {
   const { success, data, message } = ipcRenderer.sendSync("exif-from-path", path);
+  console.log({data});
   if (!success) {
     console.error(message);
     return {};
@@ -32,11 +33,11 @@ const digits = /[^0-9$.,]/g;
 export const exifValues: { [displayValue: string]: SOMETHING } = {
   height: ({ value }) => ({
     title: "Height",
-    format: () => Number(value) ?? value.toString(),
+    format: () => Number(value) ?? value,
   }),
   width: ({ value }) => ({
     title: "Width",
-    format: () => Number(value) ?? value.toString(),
+    format: () => Number(value) ?? value,
   }),
   latitudeRef: ({ description }) => ({
     title: "Latitude Ref",
@@ -44,7 +45,12 @@ export const exifValues: { [displayValue: string]: SOMETHING } = {
   }),
   latitude: ({ description }) => ({
     title: "Latitude",
-    format: () => Number(description.replace(digits, "")),
+    format: () => {
+      if (typeof description === "string") {
+        return Number(description?.replace(digits, ""));
+      }
+      return description;
+    },
   }),
   longitudeRef: ({ description }) => ({
     title: "Longitude Ref",
@@ -52,7 +58,12 @@ export const exifValues: { [displayValue: string]: SOMETHING } = {
   }),
   longitude: ({ description }) => ({
     title: "Longitude",
-    format: () => Number(description.replace(digits, "")) * -1,
+    format: () => {
+      if (typeof description === "string") {
+        return Number(description?.replace(digits, "")) * -1;
+      }
+      return description * -1;
+    },
   }),
 };
 

@@ -12,7 +12,6 @@
 }
 
 .contain-image {
-    @apply .shadow-2xl;
     object-fit: contain;
     position: relative;
     top: 50%;

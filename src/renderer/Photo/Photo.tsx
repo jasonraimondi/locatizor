@@ -39,11 +39,11 @@ export const Photo = () => {
 export const ExifData = () => {
   const { exifData }: any = useExifData();
   const datas = Object.keys(exifData);
-    console.log(exifData.longitude.format());
+  console.log(exifData.longitude?.format());
 
   return <>
     {datas.map((f) => {
-      return <p key={f}><strong>{exifData[f].title}</strong>: {exifData[f].format()}</p>;
+      return <p key={f}><strong>{exifData[f]?.title}</strong>: {exifData[f]?.format()}</p>;
     })}
   </>;
 };
