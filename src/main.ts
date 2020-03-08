@@ -7,6 +7,7 @@ import { WindowManager } from "@/main/window_manager";
 
 import "@/main/listeners/exif_from_path";
 import "@/main/listeners/files_from_path";
+import "@/main/listeners/set_gps";
 
 const windowManager: WindowManager = new WindowManager();
 
