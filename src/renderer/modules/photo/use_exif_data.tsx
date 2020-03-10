@@ -1,10 +1,12 @@
 import { ipcRenderer } from "electron";
 import React, { createContext, useContext, useMemo } from "react";
 
-import { getExifDataForPath, ExifDataFormat_SOMETHING, ValidExifFields } from "@/renderer/modules/photo/exif_data_list";
+import { getExifDataForPath, ValidExifFields } from "@/renderer/modules/photo/exif_data_helpers";
+
+type Foo = { [key in ValidExifFields]: any };
 
 type ExifDataType = {
-  exifData: { [key in ValidExifFields]: any };
+  exifData: Foo;
   updateLocationDataForPhoto: any;
 };
 
@@ -12,7 +14,7 @@ type ExifDataType = {
 const ExifDataContext = createContext<ExifDataType>();
 
 export const ExifDataProvider = ({ currentPath, ...props }: any) => {
-  const rawData = useMemo<ExifDataFormat_SOMETHING>(() => getExifDataForPath(currentPath), [currentPath]);
+  const rawData = useMemo<Foo>(() => getExifDataForPath(currentPath), [currentPath]);
 
   const setGPS = ({ lat, lng }: any): void => {
     ipcRenderer.sendSync("set-gps", {
