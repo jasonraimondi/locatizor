@@ -1,7 +1,7 @@
+import { ipcRenderer } from "electron";
 import React, { createContext, useContext, useMemo } from "react";
 
-import { getExifDataForPath, ExifDataFormat_SOMETHING, ValidExifFields } from "./exif_data_list";
-import { ipcRenderer } from "electron";
+import { getExifDataForPath, ExifDataFormat_SOMETHING, ValidExifFields } from "@/renderer/modules/photo/exif_data_list";
 
 type ExifDataType = {
   exifData: { [key in ValidExifFields]: any };

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 
-import { useCurrentPath } from "@/renderer/providers/currentPath";
-import { Image } from "@/renderer/elements/Image";
-import "./Photo.css";
-import { ExifDataProvider, useExifData } from "./use_exif_data";
-import { MapLayout } from "./MapLayout";
+import { useCurrentPath } from "@/renderer/providers/current_path";
+import { Image } from "@/renderer/elements/image";
+import { ExifDataProvider, useExifData } from "@/renderer/modules/photo/use_exif_data";
+import { MapLayout } from "@/renderer/modules/photo/map_layout";
+import "@/renderer/modules/photo/photo.css";
 
 export const Photo = () => {
   const { currentPath } = useCurrentPath();

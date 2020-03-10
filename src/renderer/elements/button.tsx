@@ -1,5 +1,5 @@
 import React from "react";
-import "./Button.css";
+import "@/renderer/elements/button.css";
 
 type Props = any & {
   disabled?: boolean;

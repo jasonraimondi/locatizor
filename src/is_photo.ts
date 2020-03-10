@@ -1,9 +1,9 @@
 const photoExtensions = [
-  ".PNG",
-  ".TIFF",
-  ".JPG",
-  ".JPEG",
-  ".NEF",
+  ".png",
+  ".tiff",
+  ".jpg",
+  ".jpeg",
+  ".nef",
 ];
 const photoRegex = new RegExp(photoExtensions.join("|"), "i");
 export const isPhoto = (file: string) => photoRegex.test(file);

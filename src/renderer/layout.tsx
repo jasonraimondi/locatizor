@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { FileSelect } from "@/renderer/FileSelect";
-import { useCurrentPath } from "./providers/currentPath";
-import { Button } from "./elements/Button";
+import { FileSelect } from "@/renderer/file_select.tsx";
+import { useCurrentPath } from "@/renderer/providers/current_path";
+import { Button } from "@/renderer/elements/button";
 
-import "./Layout.css";
+import "@/renderer/layout.css";
 
 export const Layout: React.FC = ({ children }) => {
   const { handleOpenDirectory } = useCurrentPath();

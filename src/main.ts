@@ -1,13 +1,7 @@
-declare var env: {};
-
 import { app, Menu } from "electron";
 
 import { installExtensions, IS_DEV_ENV, IS_MAC_OS } from "@/environment";
 import { WindowManager } from "@/main/window_manager";
-
-import "@/main/listeners/exif_from_path";
-import "@/main/listeners/files_from_path";
-import "@/main/listeners/set_gps";
 
 const windowManager: WindowManager = new WindowManager();
 
@@ -20,6 +14,10 @@ export function reloadAllWindows() {
 }
 
 app.on("ready", async () => {
+  await import("@/main/listeners/exif_from_path");
+  await import("@/main/listeners/files_from_path");
+  await import("@/main/listeners/set_gps");
+
   const { fileMenuTemplate } = await import("@/main/main_menu");
   Menu.setApplicationMenu(Menu.buildFromTemplate(fileMenuTemplate));
   openMainWindow();

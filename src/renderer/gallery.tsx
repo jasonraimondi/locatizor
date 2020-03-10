@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { ipcRenderer } from "electron";
 // import VisibilitySensor from "react-visibility-sensor";
 
-import "./Gallery.css";
+import "@/renderer/gallery.css";
 // import { Image } from "@/renderer/elements/Image";
 
 export const Gallery: React.FC<{ path: string }> = ({ path }) => {

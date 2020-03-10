@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
 
 import { dialog } from "@/renderer/elements/clipboard";
-import { ElectronSettingService } from "../../main/settings_service";
-import { SETTINGS } from "../constants";
+import { ElectronSettingService } from "@/main/settings_service";
+import { SETTINGS } from "@/renderer/constants";
 
 type CurrentPathType = {
   pathList: string[];

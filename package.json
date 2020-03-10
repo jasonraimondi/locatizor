@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "scripts": {
     "postversion": "run-s publish",
-    "clean": "rm -rf coverage/* dist/* dist-build/*",
+    "clean": "rm -rf coverage/ dist/ dist-build/",
     "test": "jest --passWithNoTests",
     "prestart": "run-s clean",
     "start": "run-p serve:renderer webpack:main-watch serve:main",

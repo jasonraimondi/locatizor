@@ -11,7 +11,7 @@ console.log("NODE ENV", process.env.NODE_ENV);
 
 export class WindowManager {
   private readonly DEFAULT_OPTIONS: BrowserWindowConstructorOptions = {
-    title: "Photo Life",
+    title: "photo Life",
     width: 1440,
     height: 900,
     frame: false,

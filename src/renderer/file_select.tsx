@@ -1,6 +1,6 @@
-import { useCurrentPath } from "@/renderer/providers/currentPath";
+import { useCurrentPath } from "@/renderer/providers/current_path";
 
-import { Gallery } from "@/renderer/Gallery";
+import { Gallery } from "@/renderer/gallery";
 import React from "react";
 
 export const FileSelect: React.FC = () => {

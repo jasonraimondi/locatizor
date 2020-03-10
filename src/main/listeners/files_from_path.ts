@@ -1,6 +1,7 @@
 import { ipcMain } from "electron";
 import { lstatSync, readdirSync } from "fs";
 import { join } from "path";
+
 import { isPhoto } from "@/is_photo";
 
 const isFile = (source: string) => !lstatSync(source).isDirectory();
