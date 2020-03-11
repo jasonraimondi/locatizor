@@ -13,6 +13,10 @@ export function reloadAllWindows() {
   windowManager.reloadAll();
 }
 
+// https://github.com/electron/electron/issues/18397
+// remove this when upgrading to electron 9
+app.allowRendererProcessReuse = true;
+
 app.on("ready", async () => {
   await import("@/main/listeners/exif_from_path");
   await import("@/main/listeners/files_from_path");

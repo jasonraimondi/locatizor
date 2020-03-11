@@ -1,5 +1,5 @@
 import { ipcMain } from "electron";
-import { readFileSync, writeFileSync } from "fs";
+import { readFileSync, writeFileSync, renameSync } from "fs";
 import * as piexif from "piexifjs";
 
 type Args = {
@@ -10,6 +10,7 @@ type Args = {
 
 ipcMain.on("set-gps", (event, { path, lat, lng }: Args) => {
   try {
+    renameSync(path, `${path}-original`);
     const jpgBinary = readFileSync(path).toString("binary");
     const exifObj = piexif.load(jpgBinary);
     const newExif = {
@@ -25,7 +26,7 @@ ipcMain.on("set-gps", (event, { path, lat, lng }: Args) => {
     const exifBytes = piexif.dump(newExif);
     const newJpegBinary = piexif.insert(exifBytes, jpgBinary);
     const newJpeg = Buffer.from(newJpegBinary, "binary");
-    writeFileSync(`${path}-newone.jpg`, newJpeg);
+    writeFileSync(path, newJpeg);
     event.returnValue = {
       success: true,
     };

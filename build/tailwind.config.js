@@ -17,12 +17,8 @@ module.exports = {
       '4': '4px',
     },
     extend: {
-      colors: {
-        cyan: '#9cdbff',
-      },
-      spacing: {
-        '96': '24rem',
-        '128': '32rem',
+      height: {
+        'half': '50%',
       }
     }
   },

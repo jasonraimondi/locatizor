@@ -1,6 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import { LatLngTuple } from "leaflet";
-
+import { LatLngTuple, LeafletEvent } from "leaflet";
 import React, { useState } from "react";
 import { Map as OpenStreetMap, Marker, Popup, TileLayer } from "react-leaflet";
 
@@ -8,15 +7,17 @@ type Prop = {
   lat: number;
   lng: number;
   zoom?: number;
+  onMoveEnd?: (event: LeafletEvent) => void;
 };
 
-export const Map: React.FC<Prop> = ({ lat, lng, zoom = 12 }) => {
+export const Map: React.FC<Prop> = ({ lat, lng, zoom = 12, onMoveEnd }) => {
   const [position, setPosition] = useState<LatLngTuple>([lat, lng]);
 
-  const handleMoveEnd = ({ target }: any) => {
+  const handleMoveEnd = (event: LeafletEvent) => {
+    const { target } = event;
+    if (onMoveEnd) onMoveEnd(event);
     const center = target.getCenter();
     setPosition([center.lat, center.lng]);
-    console.log(position);
   };
 
   return (

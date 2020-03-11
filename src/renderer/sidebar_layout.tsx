@@ -5,9 +5,9 @@ import { FileSelect } from "@/renderer/file_select.tsx";
 import { useCurrentPath } from "@/renderer/providers/current_path";
 import { Button } from "@/renderer/elements/button";
 
-import "@/renderer/layout.css";
+import "@/renderer/sidebar_layout";
 
-export const Layout: React.FC = ({ children }) => {
+export const SidebarLayout: React.FC = ({ children }) => {
   const { handleOpenDirectory } = useCurrentPath();
 
   return <div id="app-container">

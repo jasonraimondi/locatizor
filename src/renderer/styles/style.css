@@ -19,6 +19,15 @@ body {
     height: 100%;
 }
 
+#app-root {
+    height: 100%;
+    width: 100%;
+}
+
+.draggable {
+    -webkit-app-region: drag;
+}
+
 pre,
 code,
 .code {

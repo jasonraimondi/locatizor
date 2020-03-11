@@ -1,12 +1,12 @@
-import { useCurrentPath } from "@/renderer/providers/current_path";
-
-import { Gallery } from "@/renderer/gallery";
 import React from "react";
+
+import { useCurrentPath } from "@/renderer/providers/current_path";
+import { FileList } from "@/renderer/file_list";
 
 export const FileSelect: React.FC = () => {
   const { currentPath } = useCurrentPath();
 
   return (
-    <Gallery path={currentPath}/>
+    <FileList path={currentPath}/>
   );
 };
