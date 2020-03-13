@@ -1,31 +1,29 @@
 import "leaflet/dist/leaflet.css";
-import { LatLngTuple, LeafletEvent } from "leaflet";
-import React, { useState } from "react";
+
+import React from "react";
 import { Map as OpenStreetMap, Marker, Popup, TileLayer } from "react-leaflet";
+import { useMap } from "../../providers/map_provider";
+import { LeafletEvent } from "leaflet";
 
-type Prop = {
-  lat: number;
-  lng: number;
-  zoom?: number;
-  onMoveEnd?: (event: LeafletEvent) => void;
-};
+export const Map: React.FC = () => {
+  const { position, setPosition, zoom, setZoom } = useMap();
 
-export const Map: React.FC<Prop> = ({ lat, lng, zoom = 12, onMoveEnd }) => {
-  const [position, setPosition] = useState<LatLngTuple>([lat, lng]);
+  const handleMoveEnd = ({ target }: LeafletEvent) => {
+    const { lat, lng } = target.getCenter();
+    setPosition([lat, lng]);
+  };
 
-  const handleMoveEnd = (event: LeafletEvent) => {
-    const { target } = event;
-    if (onMoveEnd) onMoveEnd(event);
-    const center = target.getCenter();
-    setPosition([center.lat, center.lng]);
+  const handleZoomEnd = ({ target }: LeafletEvent) => {
+    setZoom(target.getZoom());
   };
 
   return (
     <OpenStreetMap
-      center={[lat, lng]}
+      center={position}
       zoom={zoom}
       className="h-full w-full"
       onMoveEnd={handleMoveEnd}
+      onZoomEnd={handleZoomEnd}
     >
       <Marker position={position}>
         <Popup>

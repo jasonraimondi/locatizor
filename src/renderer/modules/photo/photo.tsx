@@ -4,7 +4,6 @@ import { Link, Route, Switch, useParams, useRouteMatch } from "react-router-dom"
 import { useCurrentPath } from "@/renderer/providers/current_path";
 import { Image } from "@/renderer/elements/image";
 import { ExifDataProvider, useExifData } from "@/renderer/modules/photo/use_exif_data";
-import { MapLayout } from "@/renderer/modules/photo/map_layout";
 import "@/renderer/modules/photo/photo.css";
 import { SidebarLayout } from "@/renderer/sidebar_layout";
 
@@ -19,9 +18,6 @@ export const Photo = () => {
       <div id="photo-container">
         <div className="image">
           <Switch>
-            <Route path={`${match.path}/map`}>
-              <MapLayout/>
-            </Route>
             <Route path={`${match.path}/`}>
               <Image src={path} className="contain-image"/>
             </Route>

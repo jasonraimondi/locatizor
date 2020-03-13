@@ -19,6 +19,9 @@ module.exports = {
     extend: {
       height: {
         'half': '50%',
+      },
+      width: {
+        'half': '50%',
       }
     }
   },

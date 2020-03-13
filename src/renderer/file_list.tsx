@@ -5,26 +5,28 @@ import { ipcRenderer } from "electron";
 import "@/renderer/file_list.css";
 
 export const FileList: React.FC<{ path: string }> = ({ path }) => {
+  const error = <p>No files selected...</p>;
+
   if (!path) {
-    return <>Open a path to see something</>;
+    return error;
   }
 
   const files = useMemo(() => getFilesForPath(path), [path]);
 
-  if (!files.data) {
-    return <>No Files</>;
+  if (!files.data || files.data.length === 0) {
+    return error;
   }
 
-  return <>
+  return <ul className="list-reset w-full text-xs font-mono">
     {files.data.map((file, idx) => {
       const name = basename(file);
       return (
         // <Link key={idx} to={encodeURI(`/photo/${name}`)} className="flex hover:bg-blue-200">
-        <div key={idx} className="flex-1 text-xs font-mono truncate">{name}</div>
+        <li key={idx} className="flex-1">{`${name}`}</li>
         // </Link>
       );
     })}
-  </>;
+  </ul>;
 };
 
 export type IPCResponseType<T = any> = {
