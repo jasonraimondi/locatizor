@@ -6,6 +6,7 @@ import { SETTINGS } from "@/renderer/constants";
 
 type CurrentPathType = {
   pathList: string[];
+  cacheBusterVersion: number;
   currentPath: string;
   setCurrentPath: any;
   handleOpenDirectory(): Promise<void>;
@@ -23,6 +24,8 @@ export const CurrentPathProvider = (props: any) => {
   const [pathList, setPathList] = useState<string[]>(ElectronSettingService.get<string[]>(SETTINGS.PathList));
   const [activePath, setActivePath] = useState<string | undefined>(pathList[0]);
 
+  const [cacheBusterVersion, setCacheBusterVersion] = useState(0);
+
   const setCurrentPath = (path: string) => {
     const index = pathList.findIndex((ele: string) => ele === path);
     const found = index !== -1;
@@ -31,10 +34,12 @@ export const CurrentPathProvider = (props: any) => {
     ElectronSettingService.set(SETTINGS.PathList, pathList);
     setPathList(pathList);
     setActivePath(path);
+    setCacheBusterVersion(cacheBusterVersion + 1);
   };
 
   return <CurrentPathContext.Provider
     value={{
+      cacheBusterVersion,
       currentPath: activePath,
       setCurrentPath,
       pathList,

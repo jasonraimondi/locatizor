@@ -5,8 +5,6 @@ import { IExif, GPSHelper } from "piexifjs";
 
 ipcMain.on("exif-from-path", (event, path) => {
   try {
-    console.log("HI JASON");
-    console.log(path);
     const exifBinary = readFileSync(path).toString("binary");
     const { thumbnail, ...exifObj } = piexif.load(exifBinary);
 

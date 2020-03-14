@@ -1,6 +1,9 @@
 import { ipcMain } from "electron";
-import { readFileSync, writeFileSync, renameSync } from "fs";
+import { readFileSync, writeFileSync, copyFileSync } from "fs";
 import * as piexif from "piexifjs";
+
+import { renamePhoto } from "@/renderer/rename";
+import { getFiles } from "@/main/listeners/files_from_path";
 
 type Args = {
   path: string;
@@ -9,8 +12,21 @@ type Args = {
 }
 
 ipcMain.on("set-gps", (event, { path, lat, lng }: Args) => {
+  const files = getFiles(path);
+
+  for (const file of files) {
+    setGpsForPhoto(file, { lat, lng });
+  }
+
+  event.returnValue = {
+    success: true,
+  };
+});
+
+// @ts-ignore
+const setGpsForPhoto = (path: string, { lat, lng }) => {
   try {
-    renameSync(path, `${path}-original`);
+    copyFileSync(path, renamePhoto(path));
     const jpgBinary = readFileSync(path).toString("binary");
     const exifObj = piexif.load(jpgBinary);
     const newExif = {
@@ -27,13 +43,7 @@ ipcMain.on("set-gps", (event, { path, lat, lng }: Args) => {
     const newJpegBinary = piexif.insert(exifBytes, jpgBinary);
     const newJpeg = Buffer.from(newJpegBinary, "binary");
     writeFileSync(path, newJpeg);
-    event.returnValue = {
-      success: true,
-    };
   } catch (e) {
     console.log(e);
-    event.returnValue = {
-      success: false,
-    };
   }
-});
+};
