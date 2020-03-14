@@ -21,7 +21,7 @@ export const CurrentPathProvider = (props: any) => {
   };
 
   const [pathList, setPathList] = useState<string[]>(ElectronSettingService.get<string[]>(SETTINGS.PathList));
-  const [activePath, setActivePath] = useState<string|undefined>(pathList[0]);
+  const [activePath, setActivePath] = useState<string | undefined>(pathList[0]);
 
   const setCurrentPath = (path: string) => {
     const index = pathList.findIndex((ele: string) => ele === path);
