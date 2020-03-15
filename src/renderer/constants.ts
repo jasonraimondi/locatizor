@@ -1,4 +1,8 @@
 export enum SETTINGS {
   PathList = "PathList",
-  CurrentPath = "currentPath",
+}
+
+export enum COMMANDS {
+  SetGPS = "set-gps",
+  ExifFromPath = "exif-from-path",
 }

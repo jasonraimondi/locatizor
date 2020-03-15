@@ -1,6 +1,6 @@
 import path from "path";
 
-export const renamePhoto = (foo: string) => {
-  const { dir, name, ext } = path.parse(foo);
-  return `${dir}/${name}.original${ext}`;
+export const renamePhoto = (file: string, suffix = ".original", prefix = "") => {
+  const { dir, name, ext } = path.parse(file);
+  return `${dir}/${prefix}${name}${suffix}${ext}`;
 };

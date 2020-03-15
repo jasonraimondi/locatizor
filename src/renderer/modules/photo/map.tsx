@@ -6,11 +6,11 @@ import { useMap } from "../../providers/map_provider";
 import { LeafletEvent } from "leaflet";
 
 export const Map: React.FC = () => {
-  const { position, setPosition, zoom, setZoom } = useMap();
+  const { position, setUserPosition, zoom, setZoom } = useMap();
 
   const handleMoveEnd = ({ target }: LeafletEvent) => {
     const { lat, lng } = target.getCenter();
-    setPosition([lat, lng]);
+    setUserPosition([lat, lng]);
   };
 
   const handleZoomEnd = ({ target }: LeafletEvent) => {

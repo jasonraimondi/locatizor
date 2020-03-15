@@ -1,39 +1,32 @@
-import { ipcMain } from "electron";
 import { readFileSync } from "fs";
 import * as piexif from "piexifjs";
 import { IExif, GPSHelper } from "piexifjs";
 
-ipcMain.on("exif-from-path", (event, path) => {
-  try {
-    const exifBinary = readFileSync(path).toString("binary");
-    const { thumbnail, ...exifObj } = piexif.load(exifBinary);
+export const getExifFromPath = (path: string): FormattedExifData => {
+  const exifBinary = readFileSync(path).toString("binary");
+  const { thumbnail, ...exifObj } = piexif.load(exifBinary);
 
-    try {
-      delete exifObj["0th"]?.[piexif.TagValues.ExifIFD.MakerNote];
-      delete exifObj["1st"]?.[piexif.TagValues.ExifIFD.MakerNote];
-      delete exifObj.Exif?.[piexif.TagValues.ExifIFD.MakerNote];
-      delete exifObj.GPS?.[piexif.TagValues.ExifIFD.MakerNote];
-    } catch (e) {
-      console.log(e);
-    }
+  delete exifObj["0th"]?.[piexif.TagValues.ExifIFD.MakerNote];
+  delete exifObj["1st"]?.[piexif.TagValues.ExifIFD.MakerNote];
+  delete exifObj.Exif?.[piexif.TagValues.ExifIFD.MakerNote];
+  delete exifObj.GPS?.[piexif.TagValues.ExifIFD.MakerNote];
 
-    event.returnValue = {
-      success: true,
-      data: formatExifData(exifObj)
-    };
-  } catch (e) {
-    console.log(e);
-    event.returnValue = {
-      success: false,
-      data: {},
-      message: e.message,
-    };
-  }
-});
+  return formatExifData(exifObj);
+};
 
-const formatExifData = (exifObj: IExif) => {
-  console.log(exifObj);
-  const result: any = {};
+export type FormattedExifData = {
+  [key in ExifKeys]?: string | number | number[] | number[][];
+};
+
+type ExifKeys = "longitudeRef" |
+  "longitude" |
+  "latitudeRef" |
+  "latitude" |
+  "width" |
+  "height"
+
+const formatExifData = (exifObj: IExif): FormattedExifData => {
+  const result: FormattedExifData = {};
 
   result.longitudeRef = exifObj?.GPS?.[piexif.TagValues.GPSIFD.GPSLongitudeRef];
   result.longitude = exifObj?.GPS?.[piexif.TagValues.GPSIFD.GPSLongitude];
@@ -55,6 +48,5 @@ const formatExifData = (exifObj: IExif) => {
   if (!result.height) result.height = exifObj?.Exif?.[piexif.TagValues.ExifIFD.PixelYDimension];
   if (!result.height) result.height = exifObj?.Interop?.[piexif.TagValues.ExifIFD.PixelYDimension];
 
-  console.log({ result });
   return result;
 };

@@ -1,17 +1,12 @@
 import { ipcRenderer } from "electron";
+import { Path } from "../../providers/path";
+import { COMMANDS } from "../../constants";
 
-export const getExifDataForPath = (path: string): any => {
-  const { success, data, message } = ipcRenderer.sendSync("exif-from-path", path);
+export const getExifDataForPath = (path: Path): any => {
+  const { success, data, message } = ipcRenderer.sendSync(COMMANDS.ExifFromPath, path.toString());
   if (!success) {
-    console.error({message});
+    console.error({ message });
     return {};
   }
-  console.log(data);
   return data;
 };
-
-export type ValidExifFields = "height" | "width" |
-  "latitudeRef" |
-  "latitude" |
-  "longitudeRef" |
-  "longitude";

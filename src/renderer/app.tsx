@@ -1,16 +1,12 @@
 import React, { DragEvent } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { parse } from "path";
 
-import { Photo } from "@/renderer/modules/photo/photo";
-import { PathListHistory } from "@/renderer/modules/path_list_history/path_list_history";
 import { Home } from "@/renderer/home";
-import { MapProvider } from "@/renderer/providers/map_provider";
 import { useCurrentPath } from "./providers/current_path";
-import { statSync } from "fs";
+import { Path } from "./providers/path";
 
 export const App: React.FC = () => {
-  const { setCurrentPath } = useCurrentPath();
+  const { setPath } = useCurrentPath();
 
   const onDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -20,28 +16,15 @@ export const App: React.FC = () => {
     const draggedPath = e.dataTransfer?.files?.[0]?.path;
 
     if (draggedPath) {
-      const stats = statSync(draggedPath);
-      let dir = draggedPath;
-      if (!stats.isDirectory()) {
-        dir = parse(draggedPath).dir;
-      }
-      setCurrentPath(dir);
+      setPath(Path.fromString(draggedPath));
     }
   };
 
   return <div className="h-full" onDragOver={onDragOver} onDrop={onDrop}>
     <Router>
       <Switch>
-        <Route path="/photo/:photoId">
-          <Photo/>
-        </Route>
-        <Route path="/oldhome">
-          <PathListHistory />
-        </Route>
         <Route path="/">
-          <MapProvider>
-            <Home/>
-          </MapProvider>
+          <Home/>
         </Route>
       </Switch>
     </Router>

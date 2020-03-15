@@ -1,9 +1,11 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
+import { parse } from "path";
 import findKey from "lodash.findkey";
 
 import { IS_DEV_ENV, IS_MAC_OS } from "@/environment";
 import { openMainWindow, reloadAllWindows } from "@/main";
 import { ElectronSettingService } from "@/main/settings_service";
+import { SETTINGS } from "@/renderer/constants";
 
 const editMenu: MenuItemConstructorOptions = {
   label: "Edit",
@@ -41,6 +43,7 @@ const helpMenu: MenuItemConstructorOptions = {
       label: "Reset Settings",
       click() {
         ElectronSettingService.deleteAll();
+        ElectronSettingService.set(SETTINGS.PathList, [parse("~/")]);
         reloadAllWindows();
       },
     },

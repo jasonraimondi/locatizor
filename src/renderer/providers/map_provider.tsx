@@ -1,32 +1,38 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
 
 import { LatLngTuple } from "leaflet";
+import { useExifData } from "./use_exif_data";
 
 type MapType = {
   position: LatLngTuple;
-  setPosition: (p: LatLngTuple) => void;
+  setUserPosition: (s: any) => void,
   zoom: number,
   setZoom: (z: number) => void;
 };
 
-const START_POSITION: LatLngTuple = [36.167, -115.139];
-const START_ZOOM = 12;
+const START_LAT = 36.167;
+const START_LNG = -115.139;
 
-const MapContext = createContext<MapType>({
-  position: START_POSITION,
-  setPosition: (_p: LatLngTuple) => undefined,
-  zoom: START_ZOOM,
-  setZoom: (_z: number) => undefined,
-});
+// @ts-ignore
+const MapContext = createContext<MapType>();
+
+const getPosition = (exifData: any, position?: [number, number]) => {
+  if (position) {
+    return [position];
+  }
+  return [exifData.latitude ?? START_LAT, exifData.longitude ?? START_LNG]
+};
 
 export const MapProvider = (props: any) => {
-  const [position, setPosition] = useState<LatLngTuple>(START_POSITION);
+  const { exifData } = useExifData();
   const [zoom, setZoom] = useState<number>(12);
+  const [userPosition, setUserPosition] = useState<[number, number]|undefined>(undefined);
+  const exifPosition = useMemo(() => getPosition(exifData), [exifData]);
 
   return <MapContext.Provider
     value={{
-      position,
-      setPosition,
+      position: userPosition ?? exifPosition,
+      setUserPosition,
       zoom,
       setZoom,
     }}

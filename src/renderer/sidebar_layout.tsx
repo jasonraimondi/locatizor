@@ -8,7 +8,7 @@ import { Button } from "@/renderer/elements/button";
 import "@/renderer/sidebar_layout";
 
 export const SidebarLayout: React.FC = ({ children }) => {
-  const { handleOpenDirectory } = useCurrentPath();
+  const { openFileSelector } = useCurrentPath();
 
   return <div id="app-container">
     <header/>
@@ -18,7 +18,7 @@ export const SidebarLayout: React.FC = ({ children }) => {
           <li className="flex-1 self-center"><Link className="button w-full h-full" to="/">Home</Link></li>
           <li className="flex-1 self-center"><Link className="button w-full h-full" to="/photo/2">Two</Link></li>
           <li className="flex-1 self-center">
-            <Button className="w-full" onClick={handleOpenDirectory}>Open</Button>
+            <Button className="w-full" onClick={openFileSelector}>Open</Button>
           </li>
         </ul>
       </nav>

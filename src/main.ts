@@ -1,7 +1,12 @@
-import { app, Menu } from "electron";
+import { app, Menu, ipcMain } from "electron";
 
 import { installExtensions, IS_DEV_ENV, IS_MAC_OS } from "@/environment";
 import { WindowManager } from "@/main/window_manager";
+import { getFiles } from "@/main/listeners/files_from_path";
+import { setGpsForPhoto, SetGpsArgs } from "@/main/listeners/set_gps";
+import { getExifFromPath } from "@/main/listeners/exif_from_path";
+import { COMMANDS } from "@/renderer/constants";
+import { Path } from "@/renderer/providers/path";
 
 const windowManager: WindowManager = new WindowManager();
 
@@ -18,9 +23,7 @@ export function reloadAllWindows() {
 app.allowRendererProcessReuse = true;
 
 app.on("ready", async () => {
-  await import("@/main/listeners/exif_from_path");
   await import("@/main/listeners/files_from_path");
-  await import("@/main/listeners/set_gps");
 
   const { fileMenuTemplate } = await import("@/main/main_menu");
   Menu.setApplicationMenu(Menu.buildFromTemplate(fileMenuTemplate));
@@ -43,5 +46,37 @@ app.on("window-all-closed", () => {
   // to stay active until the user quits explicitly with Cmd + Q
   if (!IS_MAC_OS) {
     app.quit();
+  }
+});
+
+ipcMain.on(COMMANDS.SetGPS, (event, { path, lat, lng }: SetGpsArgs) => {
+  const p = Path.fromObject(path);
+
+  if (!p.isDirectory()) {
+    setGpsForPhoto(p.toString(), { lat, lng });
+  } else {
+    const files = getFiles(p.toDirectory());
+    for (const file of files) {
+      setGpsForPhoto(file, { lat, lng });
+    }
+  }
+
+  event.returnValue = {
+    success: true,
+  };
+});
+
+ipcMain.on(COMMANDS.ExifFromPath, (event, path) => {
+  try {
+    event.returnValue = {
+      success: true,
+      data: getExifFromPath(path),
+    };
+  } catch (e) {
+    console.log(e);
+    event.returnValue = {
+      success: false,
+      data: {},
+    };
   }
 });
