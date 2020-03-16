@@ -1,9 +1,8 @@
-import "leaflet/dist/leaflet.css";
-
 import React from "react";
 import { Map as OpenStreetMap, Marker, Popup, TileLayer } from "react-leaflet";
-import { useMap } from "../../providers/map_provider";
 import { LeafletEvent } from "leaflet";
+
+import { useMap } from "@/renderer/providers/map_provider";
 
 export const Map: React.FC = () => {
   const { position, setUserPosition, zoom, setZoom } = useMap();

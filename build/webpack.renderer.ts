@@ -41,6 +41,7 @@ const Result: Configuration = smart(baseConfig, {
             loader: "file-loader",
             options: {
               name: "[name].[contentHash].[ext]",
+              outputPath: "images/"
             },
           },
         ],

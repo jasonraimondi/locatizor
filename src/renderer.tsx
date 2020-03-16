@@ -10,6 +10,7 @@ import { ElectronSettingService } from "@/main/settings_service";
 import { SETTINGS } from "@/renderer/constants";
 import { ExifDataProvider } from "./renderer/providers/use_exif_data";
 import { MapProvider } from "./renderer/providers/map_provider";
+import "./leaflet_hackfix";
 
 if (!ElectronSettingService.has(SETTINGS.PathList)) {
   ElectronSettingService.set(SETTINGS.PathList, [parse("~/")]);
