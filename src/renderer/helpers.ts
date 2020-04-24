@@ -1,10 +1,10 @@
-import { ipcRenderer } from "electron";
+import { getFiles } from "@/main/listeners/files_from_path";
 
-export type IPCResponseType<T = any> = {
-  success: boolean;
-  data: T;
-}
-
-export const getFilesForPath = (path: string): IPCResponseType<string[]> => {
-  return ipcRenderer.sendSync("files-from-path", { path });
+export const getFilesForPath = (path?: string): string[] => {
+  console.log({ path });
+  try {
+    return getFiles(path ?? "");
+  } catch (_) {
+    return [];
+  }
 };

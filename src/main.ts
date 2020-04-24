@@ -65,18 +65,18 @@ ipcMain.on(COMMANDS.SetGPS, (event, { path, lat, lng }: SetGpsArgs) => {
     success: true,
   };
 });
-
-ipcMain.on(COMMANDS.ExifFromPath, (event, path) => {
-  try {
-    event.returnValue = {
-      success: true,
-      data: getExifFromPath(path),
-    };
-  } catch (e) {
-    console.log(e);
-    event.returnValue = {
-      success: false,
-      data: {},
-    };
-  }
-});
+//
+// ipcMain.on(COMMANDS.ExifFromPath, (event, path) => {
+//   try {
+//     event.returnValue = {
+//       success: true,
+//       data: getExifFromPath(path),
+//     };
+//   } catch (e) {
+//     console.log(e);
+//     event.returnValue = {
+//       success: false,
+//       data: {},
+//     };
+//   }
+// });

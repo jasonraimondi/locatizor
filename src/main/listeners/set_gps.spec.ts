@@ -3,7 +3,7 @@ import path from "path";
 import { setGpsForPhoto } from "@/main/listeners/set_gps";
 import { getExifFromPath } from "@/main/listeners/exif_from_path";
 import { unlinkSync, copyFileSync, existsSync } from "fs";
-import { renamePhoto } from "@/renderer/rename";
+import { renamePhoto } from "@/renderer/providers/rename";
 
 describe("Set Gps", () => {
   it("throws when file is missing", () => {

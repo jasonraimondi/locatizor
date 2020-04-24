@@ -1,48 +1,91 @@
 import { basename } from "path";
 import React, { useMemo } from "react";
+import styled, { css } from "styled-components";
 
 import "@/renderer/file_list.css";
-import { getFilesForPath } from "@/renderer/helpers";
-import { useCurrentPath } from "./providers/current_path";
-import { Path } from "./providers/path";
-import { useMap } from "./providers/map_provider";
 
-type Props = {
-  path: string;
-  cacheBusterVersion?: number;
-};
+import { useCurrentPath } from "@/renderer/providers/use_current_path";
+import { Path } from "@/renderer/providers/path";
+import { allowedPhotoExtensions } from "../is_photo";
 
-export const FileList: React.FC<Props> = ({ path }) => {
-  const error = <p>No files selected...</p>;
-  const { setPath } = useCurrentPath();
-  const { cacheBuster } = useCurrentPath();
-  const { setUserPosition } = useMap();
+function isSelected(path: Path, name: string) {
+  return path.toObject().name === name;
+}
 
-  if (!path) {
-    return error;
-  }
+export const FileList: React.FC<{ files: string[] }> = ({ files }) => {
+  const { path, setPath } = useCurrentPath();
 
-  const files = useMemo(() => getFilesForPath(path), [path, cacheBuster]);
+  let error: JSX.Element;
 
-  if (!files.data || files.data.length === 0) {
-    return error;
+  if (!files || files.length === 0) {
+    error = <p>
+      <span className="h4">I can't seem to find any files here...</span><br/>
+      <span>I'm looking for these extensions</span><br/>
+      <span>{allowedPhotoExtensions.map(ext => <FileTypes key={ext}>{ext}</FileTypes>)}</span>
+    </p>;
   }
 
   const handleClick = (file: string) => {
-    setUserPosition(undefined);
+    console.log(JSON.stringify(file));
     setPath(Path.fromString(file));
   };
 
-  return <ul className="list-reset w-full text-xs font-mono">
-    {files.data.map((file, idx) => {
+  if (error!) {
+    return <ErrorWrapper>{error!}</ErrorWrapper>;
+  }
+
+  return <FileListWrapper>
+    {files.map((file, idx) => {
       const name = basename(file);
+      const _isSelected = isSelected(path, name);
       return (
-        // <Link key={idx} to={encodeURI(`/photo/${name}`)} className="flex hover:bg-blue-200">
-        <li key={idx} className="flex-1" onClick={() => handleClick(file)}>
+        <ListItem
+          key={idx}
+          isSelected={_isSelected}
+          className={_isSelected ? "isSelected" : undefined}
+                      onClick={() => handleClick(file)}
+        >
           {name}
-        </li>
-        // </Link>
+        </ListItem>
       );
     })}
-  </ul>;
+  </FileListWrapper>;
 };
+
+const ErrorWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const FileTypes = styled.strong`
+  background-color: ${props => props.theme.gray["300"]};
+  margin: 0 0.2rem;
+  padding: 0.1rem 0.45rem;
+  display: inline-block;
+`;
+
+export const FileListWrapper = styled.ul`
+	list-style: none;
+	margin-left: 0;
+	padding-left: 0;
+	width: 100%;
+	font-size: 0.8rem;
+`;
+
+export const ListItem = styled.li<{ isSelected?: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  padding: 0.5rem 0.8rem;
+  border-bottom: 1px solid ${props => props.theme.gray["400"]};
+  ${props => props.isSelected && css`
+    background-color: teal;
+  `}
+  &:hover {
+    background-color: ${props => props.theme.gray["200"]};
+  }
+`;

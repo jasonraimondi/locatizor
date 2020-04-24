@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 
 import { getExifDataForPath } from "@/renderer/modules/photo/exif_data_helpers";
-import { useCurrentPath } from "./current_path";
+import { useCurrentPath } from "./use_current_path";
 import { FormattedExifData } from "../../main/listeners/exif_from_path";
 
 type ExifDataType = {
@@ -13,7 +13,7 @@ const ExifDataContext = createContext<ExifDataType>();
 
 export const ExifDataProvider = (props: any) => {
   const { path } = useCurrentPath();
-  const exifData = useMemo(() => getExifDataForPath(path), [path.toString()]);
+  const exifData = useMemo(() => getExifDataForPath(path), [path?.toString()]);
 
   return <ExifDataContext.Provider
     value={{

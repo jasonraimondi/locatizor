@@ -48,11 +48,12 @@ const Result: Configuration = smart(baseConfig, {
       },
       {
         test: /\.svg$/,
-        exclude: /src\/renderer\/styles/,
         use: "svg-inline-loader",
       },
       {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        include: /node_modules/,
+        exclude: /node_modules\/zondicons/,
         use: [
           {
             loader: "file-loader",

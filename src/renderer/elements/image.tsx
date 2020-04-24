@@ -3,15 +3,16 @@ import Img from "react-image";
 
 type Props = {
   src: string;
+  alt?: string;
   className?: string;
 };
 
-export const Image: React.FC<Props> = ({ src, className = "", ...props }) => {
+export const Image: React.FC<Props> = ({ src, alt, className = "", ...props }) => {
   const DEFAULT_IMAGE = require("@/assets/loading.jpg");
   return (
     <Img
       src={[src, `/${DEFAULT_IMAGE.default}`]}
-      alt={src}
+      alt={alt ?? src}
       className={className.concat("")}
       {...props}
     />

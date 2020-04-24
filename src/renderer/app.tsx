@@ -1,9 +1,10 @@
 import React, { DragEvent } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import styled from "styled-components";
 
 import { Home } from "@/renderer/home";
-import { useCurrentPath } from "./providers/current_path";
-import { Path } from "./providers/path";
+import { useCurrentPath } from "@/renderer/providers/use_current_path";
+import { Path } from "@/renderer/providers/path";
+import { Draggable } from "./elements/elements";
 
 export const App: React.FC = () => {
   const { setPath } = useCurrentPath();
@@ -20,13 +21,32 @@ export const App: React.FC = () => {
     }
   };
 
-  return <div className="h-full" onDragOver={onDragOver} onDrop={onDrop}>
-    <Router>
-      <Switch>
-        <Route path="/">
-          <Home/>
-        </Route>
-      </Switch>
-    </Router>
-  </div>;
+  return <>
+    <DraggableTopbar>Locatizor</DraggableTopbar>
+    <MainContainer onDragOver={onDragOver} onDrop={onDrop}>
+      <Home />
+    </MainContainer>
+  </>;
 };
+
+const DraggableTopbar = styled(Draggable)`
+  grid-area: dragbar;
+  height: 100%;
+  color: ${props => props.theme.gray["700"]};
+  background-color: ${props => props.theme.gray["200"]};
+  border-bottom: 1px solid ${props => props.theme.gray["400"]};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MainContainer = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  //display: grid;
+  //grid-template-columns: 50% 50%;
+`;

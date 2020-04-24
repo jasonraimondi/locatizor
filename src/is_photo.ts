@@ -1,10 +1,10 @@
-const photoExtensions = [
+export const allowedPhotoExtensions = [
   ".jpg",
   ".jpeg",
-  ".heic",
-  ".nef",
-  ".png",
-  ".tiff",
+  // ".heic",
+  // ".nef",
+  // ".png",
+  // ".tiff",
 ];
-const photoRegex = new RegExp(photoExtensions.join("|"), "i");
+const photoRegex = new RegExp(allowedPhotoExtensions.join("|"), "i");
 export const isPhoto = (file: string) => photoRegex.test(file);

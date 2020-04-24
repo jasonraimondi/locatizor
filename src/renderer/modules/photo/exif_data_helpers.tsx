@@ -1,12 +1,12 @@
-import { ipcRenderer } from "electron";
-import { Path } from "../../providers/path";
-import { COMMANDS } from "../../constants";
+import { Path } from "@/renderer/providers/path";
+import { getExifFromPath } from "@/main/listeners/exif_from_path";
 
-export const getExifDataForPath = (path: Path): any => {
-  const { success, data, message } = ipcRenderer.sendSync(COMMANDS.ExifFromPath, path.toString());
-  if (!success) {
-    console.error({ message });
+export const getExifDataForPath = (path?: Path): any => {
+  console.log(path?.toString(false))
+  try {
+    return getExifFromPath(path?.toString(false))
+  } catch (e) {
+    console.log(e)
     return {};
   }
-  return data;
 };

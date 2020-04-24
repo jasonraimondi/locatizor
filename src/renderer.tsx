@@ -1,26 +1,23 @@
 import "@/renderer/styles/style.css";
+import "@/leaflet_hackfix";
 
 import React from "react";
-import { parse } from "path";
 import ReactDOM from "react-dom";
+import { ThemeProvider } from "styled-components";
 
 import { App } from "@/renderer/app";
-import { CurrentPathProvider } from "@/renderer/providers/current_path";
-import { ElectronSettingService } from "@/main/settings_service";
-import { SETTINGS } from "@/renderer/constants";
+import { CurrentPathProvider } from "@/renderer/providers/use_current_path";
+import { theme } from "./theme";
+import { MapProvider } from "./renderer/providers/use_map_provider";
 import { ExifDataProvider } from "./renderer/providers/use_exif_data";
-import { MapProvider } from "./renderer/providers/map_provider";
-import "./leaflet_hackfix";
-
-if (!ElectronSettingService.has(SETTINGS.PathList)) {
-  ElectronSettingService.set(SETTINGS.PathList, [parse("~/")]);
-}
 
 export default ReactDOM.render(
   <CurrentPathProvider>
     <ExifDataProvider>
       <MapProvider>
-        <App/>
+        <ThemeProvider theme={theme}>
+          <App/>
+        </ThemeProvider>
       </MapProvider>
     </ExifDataProvider>
   </CurrentPathProvider>,

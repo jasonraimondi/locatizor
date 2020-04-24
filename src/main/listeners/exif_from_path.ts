@@ -1,8 +1,12 @@
-import { readFileSync } from "fs";
+import { readFileSync, existsSync } from "fs";
 import * as piexif from "piexifjs";
 import { IExif, GPSHelper } from "piexifjs";
 
-export const getExifFromPath = (path: string): FormattedExifData => {
+export const getExifFromPath = (path?: string): FormattedExifData => {
+  if (!path || !existsSync(path)) {
+    console.warn("file does not exist", path);
+    return {};
+  }
   const exifBinary = readFileSync(path).toString("binary");
   const { thumbnail, ...exifObj } = piexif.load(exifBinary);
 

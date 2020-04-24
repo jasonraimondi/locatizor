@@ -1,5 +1,8 @@
 import { format, parse, ParsedPath } from "path";
 
+const homedir = process.env.HOME;
+const rxp = new RegExp(homedir ?? "");
+
 export class Path {
   private constructor(private readonly src: ParsedPath) {
   }
@@ -12,8 +15,16 @@ export class Path {
     return new Path(parse(src));
   }
 
-  toString() {
-    return format(this.src);
+  private shorten(str: string) {
+    let result = str;
+    if (homedir && rxp.test(result)) result = result.replace(homedir, "~")
+    return result;
+  }
+
+  toString(short = true) {
+    const result = format(this.src);
+    if (short) return this.shorten(result);
+    return result;
   }
 
   toObject() {
@@ -24,10 +35,11 @@ export class Path {
     return this.src.ext === "";
   }
 
-  toDirectory() {
+  toDirectory(short = true) {
     if (!this.isDirectory()) {
+      if (short) return this.shorten(this.src.dir);
       return this.src.dir;
     }
-    return this.toString();
+    return this.toString(short);
   }
 }

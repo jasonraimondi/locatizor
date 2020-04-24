@@ -10,19 +10,3 @@ export const getFiles = (source: string) =>
 
 // const isDirectory = (source: string) => lstatSync(source).isDirectory();
 // const getDirectories = (source: string) => readdirSync(source).map(name => join(source, name)).filter(isDirectory);
-
-ipcMain.on("files-from-path", (event, { path }) => {
-  try {
-    const files = getFiles(path);
-    event.returnValue = {
-      success: true,
-      data: files
-    };
-  } catch (e) {
-    event.returnValue = {
-      success: false,
-      data: [],
-      message: e.message
-    };
-  }
-});
