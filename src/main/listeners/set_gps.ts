@@ -45,7 +45,7 @@ export const setGpsForPhoto = (path: string, { lat, lng }: { lat: number, lng: n
 };
 
 export type SetGpsArgs = {
-  path: ParsedPath;
+  path: string;
   lat: number;
   lng: number;
 }

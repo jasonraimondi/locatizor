@@ -2,6 +2,9 @@ import React, { createContext, useContext, useState, useMemo } from "react";
 
 import { LatLngTuple } from "leaflet";
 import { useExifData } from "./use_exif_data";
+import { ipcRenderer } from "electron";
+import { COMMANDS } from "../constants";
+import { useCurrentPath } from "./use_current_path";
 
 type MapType = {
   exifPosition: LatLngTuple;
@@ -9,6 +12,8 @@ type MapType = {
   setUserPosition: (s: any) => void,
   zoom: number,
   setZoom: (z: number) => void;
+  updateImagesForDirectory: () => void;
+  updateImageGPS: () => void;
 };
 
 const START_LAT = 0;
@@ -25,10 +30,39 @@ const getPosition = (exifData: any, position?: [number, number]) => {
 };
 
 export const MapProvider = (props: any) => {
+  const { path } = useCurrentPath();
   const { exifData } = useExifData();
   const [zoom, setZoom] = useState<number>(12);
   const [userPosition, setUserPosition] = useState<[number, number]|undefined>(undefined);
   const exifPosition = useMemo(() => getPosition(exifData), [exifData]);
+
+  const updateImageGPS = () => {
+    if (!path || !userPosition) {
+      return;
+    }
+
+    const [lat, lng] = userPosition;
+
+    ipcRenderer.send(COMMANDS.SetGPS, {
+      path: path.toFullPath(),
+      lat,
+      lng,
+    });
+  }
+
+  const updateImagesForDirectory = () => {
+    if (!path || !userPosition) {
+      return;
+    }
+
+    const [lat, lng] = userPosition;
+
+    ipcRenderer.send(COMMANDS.SetGPS, {
+      path: path.getFullDirectory(),
+      lat,
+      lng,
+    });
+  }
 
   return <MapContext.Provider
     value={{
@@ -37,6 +71,8 @@ export const MapProvider = (props: any) => {
       setUserPosition,
       zoom,
       setZoom,
+      updateImagesForDirectory,
+      updateImageGPS,
     }}
     {...props}
   />;

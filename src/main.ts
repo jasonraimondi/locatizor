@@ -50,21 +50,25 @@ app.on("window-all-closed", () => {
 });
 
 ipcMain.on(COMMANDS.SetGPS, (event, { path, lat, lng }: SetGpsArgs) => {
-  const p = Path.fromObject(path);
+  console.log("path", path, lat, lng);
 
+  const p = Path.fromString(path);
   const errors: string[] = [];
 
-  if (!p.isDirectory()) {
-    setGpsForPhoto(p.toString(), { lat, lng });
-  } else {
-    const files = getFiles(p.getDirectory());
+  if (p.isDirectory()) {
+    console.log("is directory")
+    const files = getFiles(p.getFullDirectory());
     for (const file of files) {
       try {
+        console.log(file);
         setGpsForPhoto(file, { lat, lng });
       } catch (e) {
         errors.push(e.message);
       }
     }
+  } else {
+    console.log("is not directory")
+    setGpsForPhoto(p.toFullPath(), { lat, lng });
   }
 
   event.returnValue = {

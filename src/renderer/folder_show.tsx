@@ -9,6 +9,7 @@ import { Map } from "@/renderer/modules/photo/map";
 import styled from "styled-components";
 import { Button } from "./elements/elements";
 import { Image } from "./elements/image";
+import { useMap } from "./providers/use_map_provider";
 
 export const FolderShow = () => {
   return <FolderShowWrapper>
@@ -55,8 +56,10 @@ export const FolderSelect = () => {
 };
 
 export const Actions = () => {
+  const { updateImagesForDirectory, updateImageGPS } = useMap();
   return <ActionsWrapper>
-    <Button>Apply changes to directory</Button>
+    <Button onClick={updateImageGPS} style={{ marginRight: 15 }}>Apply to Image</Button>
+    <Button onClick={updateImagesForDirectory}>Apply to Directory</Button>
   </ActionsWrapper>;
 };
 
@@ -92,9 +95,8 @@ export const ActionsWrapper = styled.div`
   grid-area: actions;
   background-color: ${props => props.theme.gray["900"]};
   padding: 0.5rem;
-  button {
-    float: right;
-  }
+  display: flex;
+  justify-content: flex-end;
 `;
 
 export const MapWrapper = styled.div`
