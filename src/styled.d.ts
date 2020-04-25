@@ -8,7 +8,9 @@ declare module "styled-components" {
     black: string;
     gray: { [key in ColorScale]: string };
     main: string;
-    topbar: string;
+    topbar: {
+      height: string;
+    };
     transparent: string;
   }
 }

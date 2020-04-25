@@ -21,10 +21,8 @@ export class Path {
     return result;
   }
 
-  toString(short = true) {
-    const result = format(this.src);
-    if (short) return this.shorten(result);
-    return result;
+  toString() {
+    return this.shorten(format(this.src));
   }
 
   toObject() {
@@ -35,11 +33,21 @@ export class Path {
     return this.src.ext === "";
   }
 
-  toDirectory(short = true) {
+  toFullPath() {
+    return format(this.src);
+  }
+
+  getFullDirectory() {
     if (!this.isDirectory()) {
-      if (short) return this.shorten(this.src.dir);
       return this.src.dir;
     }
-    return this.toString(short);
+    return this.toFullPath();
+  }
+
+  getDirectory() {
+    if (!this.isDirectory()) {
+      return this.shorten(this.src.dir);
+    }
+    return this.toString();
   }
 }

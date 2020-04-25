@@ -7,13 +7,9 @@ import { FolderShow } from "./folder_show";
 export const Home = () => {
   const { path } = useCurrentPath();
 
-  let content = <FolderOpen/>;
-
-  if (path?.toDirectory()) {
-    content = <FolderShow/>;
+  if (path?.getDirectory()) {
+    return <FolderShow/>;
   }
 
-  return <>
-    {content}
-  </>;
+  return <FolderOpen/>;
 };

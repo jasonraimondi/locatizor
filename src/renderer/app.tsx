@@ -21,13 +21,24 @@ export const App: React.FC = () => {
     }
   };
 
-  return <>
+  return <AppWrapper>
     <DraggableTopbar>Locatizor</DraggableTopbar>
     <MainContainer onDragOver={onDragOver} onDrop={onDrop}>
       <Home />
     </MainContainer>
-  </>;
+  </AppWrapper>;
 };
+
+const AppWrapper = styled.div`
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-areas:
+        "dragbar"
+        "main";
+    grid-template-rows: ${props => props.theme.topbar.height} calc(100% - ${props => props.theme.topbar.height});
+    grid-template-columns: 1fr;
+`;
 
 const DraggableTopbar = styled(Draggable)`
   grid-area: dragbar;

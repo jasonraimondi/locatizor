@@ -9,22 +9,20 @@ type Props = {
   onClick?: () => void;
 };
 
-export const SVG: React.FC<Props> = ({ icon, height = "1.5rem", width = "1.5rem", ...props }) => {
-  return <SvgWrapper
+export const SVG: React.FC<Props> = ({ icon, height = "1.5rem", width = "1.5rem", ...props }) => (
+  <SvgWrapper
     height={height}
     width={width}
     isClickable={!!props.onClick}
     dangerouslySetInnerHTML={{ __html: icon }}
-    {...props} />;
-};
+    {...props} />
+);
 
-type WrapperProps = {
+const SvgWrapper = styled.span<{
   height: string;
   width: string;
   isClickable: boolean;
-};
-
-const SvgWrapper = styled.span<WrapperProps>`
+}>`
   display: inline-block;
   width: ${props => props.width};
   height: ${props => props.height};

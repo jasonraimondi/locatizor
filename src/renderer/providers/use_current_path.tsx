@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState } from "react";
-import { ParsedPath } from "path";
 
 import { dialog } from "@/renderer/elements/clipboard";
 import { Path } from "./path";

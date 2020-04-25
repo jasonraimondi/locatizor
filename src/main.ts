@@ -52,17 +52,23 @@ app.on("window-all-closed", () => {
 ipcMain.on(COMMANDS.SetGPS, (event, { path, lat, lng }: SetGpsArgs) => {
   const p = Path.fromObject(path);
 
+  const errors: string[] = [];
+
   if (!p.isDirectory()) {
     setGpsForPhoto(p.toString(), { lat, lng });
   } else {
-    const files = getFiles(p.toDirectory());
+    const files = getFiles(p.getDirectory());
     for (const file of files) {
-      setGpsForPhoto(file, { lat, lng });
+      try {
+        setGpsForPhoto(file, { lat, lng });
+      } catch (e) {
+        errors.push(e.message);
+      }
     }
   }
 
   event.returnValue = {
-    success: true,
+    errors
   };
 });
 //

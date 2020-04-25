@@ -5,6 +5,7 @@ type Props = {
   src: string;
   alt?: string;
   className?: string;
+  [key: string]: any;
 };
 
 export const Image: React.FC<Props> = ({ src, alt, className = "", ...props }) => {

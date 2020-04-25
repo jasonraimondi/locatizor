@@ -16,5 +16,7 @@ export const theme: DefaultTheme = {
     900: "#1a202c",
   },
   main: "tomato",
-  topbar: "mediumseagreen",
+  topbar: {
+    height: "30px",
+  },
 };

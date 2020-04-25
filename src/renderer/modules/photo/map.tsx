@@ -5,9 +5,9 @@ import { LeafletEvent } from "leaflet";
 import { useMap } from "@/renderer/providers/use_map_provider";
 import { YellowMarker, RedMarker } from "../../../leaflet_hackfix";
 
-type Props = { showCrosshairs?: boolean; enabled?: boolean };
+type Props = { enabled?: boolean };
 
-export const Map: React.FC<Props> = ({ showCrosshairs = false, enabled = true }) => {
+export const Map: React.FC<Props> = ({ enabled = true }) => {
   const { exifPosition, userPosition, setUserPosition, zoom, setZoom } = useMap();
 
   const handleMoveEnd = ({ target }: LeafletEvent) => {
@@ -19,13 +19,13 @@ export const Map: React.FC<Props> = ({ showCrosshairs = false, enabled = true })
     setZoom(target.getZoom());
   };
 
-  const map = <OpenStreetMap
+  return <OpenStreetMap
     center={userPosition ?? exifPosition}
     zoom={zoom}
-    className="h-full w-full"
+    style={{ height: "100%", width: "100%"}}
     onMoveEnd={handleMoveEnd}
     onZoomEnd={handleZoomEnd}
-    dragging={enabled === false}
+    dragging={enabled}
   >
     {exifPosition ? <Marker position={exifPosition} icon={YellowMarker}>
       <Popup>
@@ -43,15 +43,4 @@ export const Map: React.FC<Props> = ({ showCrosshairs = false, enabled = true })
       attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
     />
   </OpenStreetMap>;
-
-  if (showCrosshairs) {
-    return (
-      <div className="h-full w-full crosshairs-container">
-        {map}
-        <div className="crosshairs">CROSSHAIRS</div>
-      </div>
-    );
-  }
-
-  return <>{map}</>;
 };

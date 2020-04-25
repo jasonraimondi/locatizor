@@ -1,8 +1,6 @@
 import { basename } from "path";
-import React, { useMemo } from "react";
+import React  from "react";
 import styled, { css } from "styled-components";
-
-import "@/renderer/file_list.css";
 
 import { useCurrentPath } from "@/renderer/providers/use_current_path";
 import { Path } from "@/renderer/providers/path";
