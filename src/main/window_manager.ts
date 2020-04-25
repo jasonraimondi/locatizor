@@ -28,7 +28,7 @@ export class WindowManager {
   // private settingsWindow: BrowserWindow = null;
 
   private mainWindowUrl = IS_DEV_ENV ? format(new URL("http://localhost:8080")) : format({
-    pathname: join(__dirname, "index.html"),
+    pathname: join(__dirname, "index.md"),
     protocol: "file:",
     slashes: true,
   });

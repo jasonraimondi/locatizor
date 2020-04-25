@@ -69,7 +69,7 @@ const Result: Configuration = smart(baseConfig, {
   plugins: [
     new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
-      template: projectRoot + "/index.html",
+      template: projectRoot + "/index.md",
     }),
   ],
 });
