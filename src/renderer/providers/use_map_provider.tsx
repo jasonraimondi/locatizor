@@ -18,6 +18,7 @@ type MapType = {
   setZoom: (z: number) => void;
   updateImagesForDirectory: () => void;
   updateImageGPS: () => void;
+  searchMap: (q: string) => Promise<any>;
 };
 
 const START_LAT = 0;
@@ -39,6 +40,12 @@ export const MapProvider = (props: any) => {
   const [zoom, setZoom] = useState<number>(12);
   const [userPosition, setUserPosition] = useState<[number, number] | undefined>(undefined);
   const exifPosition = useMemo(() => getPosition(exifData), [exifData]);
+
+  const searchMap = async (query: string) => {
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURI(query)}&format=json`);
+    const result = await res.json().catch(console.log);
+    console.log(result)
+  }
 
   const updateImageGPS = () => {
     update(path?.toFullPath());
@@ -94,6 +101,7 @@ This is crazy yes
       setZoom,
       updateImagesForDirectory,
       updateImageGPS,
+      searchMap,
     }}
     {...props}
   />;

@@ -1,20 +1,21 @@
-import { useCurrentPath } from "./providers/use_current_path";
-import { useExifData } from "./providers/use_exif_data";
-import React, { useMemo } from "react";
-import { getFilesForPath } from "./helpers";
-import { FileList } from "./file_list";
-
 import { Map } from "@/renderer/modules/photo/map";
+import React, { useMemo } from "react";
 
 import styled from "styled-components";
 import { Button } from "./elements/elements";
 import { Image } from "./elements/image";
+import { FileList } from "./file_list";
+import { getFilesForPath } from "./helpers";
+import { MapSearch } from "./map_search";
+import { useCurrentPath } from "./providers/use_current_path";
+import { useExifData } from "./providers/use_exif_data";
 import { useMap } from "./providers/use_map_provider";
 
 export const FolderShow = () => {
   return <FolderShowWrapper>
     <MapWrapper>
-      <Map />
+      <MapSearch/>
+      <Map/>
     </MapWrapper>
     <Details/>
     <FolderSelect/>
@@ -30,7 +31,7 @@ export const Details = () => {
 
   return <DetailsWrapper>
     <ImageWrapper>
-      <Image src={path.toFullPath()} style={{ height: "100%" }} />
+      <Image src={path.toFullPath()} style={{ height: "100%" }}/>
     </ImageWrapper>
     <p>Longitude: {JSON.stringify(exifData.longitude) ?? "?"}</p>
     <p>Latitude: {JSON.stringify(exifData.latitude) ?? "?"}</p>
