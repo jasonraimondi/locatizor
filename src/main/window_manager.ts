@@ -1,11 +1,10 @@
+import { IS_DEV_ENV } from "@/environment";
+import { ElectronSettingService } from "@/main/settings_service";
 import { BrowserWindow, BrowserWindowConstructorOptions, screen } from "electron";
 import { autoUpdater } from "electron-updater";
 import merge from "lodash.merge";
 import { join } from "path";
 import { format } from "url";
-
-import { IS_DEV_ENV } from "@/environment";
-import { ElectronSettingService } from "@/main/settings_service";
 
 console.log("NODE ENV", process.env.NODE_ENV);
 
@@ -28,7 +27,7 @@ export class WindowManager {
   // private settingsWindow: BrowserWindow = null;
 
   private mainWindowUrl = IS_DEV_ENV ? format(new URL("http://localhost:8080")) : format({
-    pathname: join(__dirname, "index.md"),
+    pathname: join(__dirname, "index.html"),
     protocol: "file:",
     slashes: true,
   });
