@@ -25,6 +25,7 @@ export const MapSearch = () => {
   let subscription: Subscription;
 
   const { setUserPosition } = useMap();
+  const [pristine, setPristine] = useState(true);
   const [results, setResults] = useState<{ description: string; latitude: number; longitude: number; }[]>([]);
 
   useEffect(() => {
@@ -67,36 +68,76 @@ export const MapSearch = () => {
     onSearch$.next(value);
   };
 
-  return <div style={{ position: "relative" }}>
+  let content: any = <ResultContainer>
+    {results.map((r, idx) => (
+      <Result key={idx} onClick={() => {
+        setPristine(true);
+        setUserPosition([r.latitude, r.longitude]);
+        setResults([]);
+      }}>{r.description}</Result>
+    ))}
+  </ResultContainer>;
+
+  if (results.length === 0) {
+    content = <Result className="no-hover">No Results</Result>;
+  }
+
+  if (results.length === 0 && pristine) {
+    content = undefined;
+  }
+
+  return <SearchContainer>
     <TextInput type="text" onChange={onSearch} placeholder="200 Santa Monica Pier, Santa Monica, CA 90401"/>
-    <ResultContainer>
-      {results.map((r, idx) => (
-        <Text key={idx} onClick={() => setUserPosition([r.latitude, r.longitude])}>{r.description}</Text>
-      ))}
-    </ResultContainer>
-  </div>;
+    <CloseText onClick={() => {
+      setResults([]);
+      setPristine(true);
+      onSearch$.next("");
+    }}>&times;</CloseText>
+    {content}
+  </SearchContainer>;
 };
 
-const ResultContainer = styled.div`
+const CloseText = styled.span`
+    position: absolute;
+    right: 0.45rem;
+    font-size: 1.4rem;
+    top: -0.1rem;
+    cursor: pointer;
+`;
+
+const SearchContainer = styled.div`
   position: absolute;
   z-index: 999;
-  width: 100%;
+  margin: 10px;
+  width: calc(100% - 4rem);
+  float: right;
 `;
 
 const TextInput = styled.input`
   width: 100%;
   padding: 0.2rem;
-  border-bottom: 1px solid ${props => props.theme.gray["800"]};
+  border: 1px solid ${props => props.theme.gray["800"]};
+  border-radius: 0.25rem;
 `;
 
-const Text = styled.div`
+const ResultContainer = styled.div`
+  margin-top: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid ${props => props.theme.gray["400"]};
+  border-radius: 0.25rem;
+`;
+
+const Result = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background-color: rgba(255, 255, 255, 0.75);
-  border-bottom: 1px solid rgba(50, 50, 50, 0.4);
+  background-color: inherit;
 
   &:hover {
     background-color: orange;
+  }
+
+  &.no-hover:hover {
+    background-color: inherit;
   }
 `;

@@ -2,7 +2,6 @@ import { readFileSync, writeFileSync, copyFileSync, existsSync } from "fs";
 import * as piexif from "piexifjs";
 
 import { renamePhoto } from "@/renderer/providers/rename";
-import { ParsedPath } from "path";
 
 const originalRegex = /\.original\./;
 const isOriginal = (name: string): boolean => originalRegex.test(name);

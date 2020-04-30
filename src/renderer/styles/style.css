@@ -9,6 +9,9 @@
 
 @import "~leaflet/dist/leaflet.css";
 
+/**
+Move leaflet zoom to the right hand side
+ */
 .leaflet-control-container {
   position: absolute;
   right: 3rem;

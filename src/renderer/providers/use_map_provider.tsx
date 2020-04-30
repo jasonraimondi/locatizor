@@ -41,10 +41,12 @@ export const MapProvider = (props: any) => {
   const exifPosition = useMemo(() => getPosition(exifData), [exifData]);
 
   const updateImageGPS = () => {
+    console.log("FOO1", path?.toFullPath())
     update(path?.toFullPath());
   };
 
   const updateImagesForDirectory = () => {
+    console.log("FOO2", path?.getFullDirectory())
     update(path?.getFullDirectory());
   };
 
@@ -63,16 +65,13 @@ export const MapProvider = (props: any) => {
       message: "Are you sure?",
       detail: `This will update the following image:
 
-${Path.fromString(p).toShortString()}
-
-This is crazy yes
-      `,
-      // checkboxLabel: "Disable this?",
-      // checkboxChecked: ElectronSettingService.get("disable-check-dialogue") ?? false,
+${Path.fromString(p).toShortString()}`,
+      checkboxLabel: "Disable this?",
+      checkboxChecked: ElectronSettingService.get("disable-check-dialogue") ?? false,
       // icon: NativeImage.createFromPath(p),
     };
 
-    dialog.showMessageBox(null, options, (response: any, checkboxChecked: any) => {
+    dialog.showMessageBox(null, options).then( ({ checkboxChecked, response }: any) => {
       ElectronSettingService.set("disable-check-dialog", checkboxChecked);
       console.log(response);
       console.log(checkboxChecked);
@@ -82,7 +81,7 @@ This is crazy yes
         lat,
         lng,
       });
-    });
+  });
   };
 
   return <MapContext.Provider
