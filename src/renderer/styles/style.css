@@ -8,3 +8,8 @@
 @import "_svg.css";
 
 @import "~leaflet/dist/leaflet.css";
+
+.leaflet-control-container {
+  position: absolute;
+  right: 3rem;
+}

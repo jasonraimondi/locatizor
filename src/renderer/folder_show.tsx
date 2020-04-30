@@ -102,13 +102,15 @@ export const ActionsWrapper = styled.div`
 
 export const MapWrapper = styled.div`
   grid-area: map;
+  display: grid;
+  grid-template-rows: auto 1fr;
   background-color: ${props => props.theme.gray["500"]};
 `;
 
 export const DetailsWrapper = styled.div`
   grid-area: details;
   background-color: ${props => props.theme.gray["400"]};
-  overflow: scroll;
+  overflow-y: auto;
   padding: 0.5rem;
 `;
 
