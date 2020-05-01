@@ -3,6 +3,7 @@ import { of, Subject, Subscription } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { catchError, debounceTime, map, startWith, switchMap, tap } from "rxjs/operators";
 import styled from "styled-components";
+import { pkg } from "../version";
 import { useMap } from "./providers/use_map_provider";
 
 type OpenStreetMapResult = {
@@ -31,6 +32,8 @@ export const MapSearch = () => {
   useEffect(() => {
     subscription = onSearch$
       .pipe(
+        // 1s rate limit requirement for open street maps nominatim
+        // @see https://operations.osmfoundation.org/policies/nominatim/
         debounceTime(1000),
         switchMap(query => {
           if (!query) {
@@ -38,6 +41,13 @@ export const MapSearch = () => {
           }
           return fromFetch(
             `https://nominatim.openstreetmap.org/search?q=${query}&format=json`,
+            {
+              method: "GET",
+              headers: {
+                Referer: pkg.url,
+                "x-custom-user-agent": `${pkg.name}/${pkg.version}`,
+              }
+            }
           ).pipe(
             switchMap(response => {
               if (response.ok) {

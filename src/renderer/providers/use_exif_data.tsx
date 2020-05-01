@@ -12,7 +12,7 @@ const ExifDataContext = createContext<ExifDataType>();
 
 export const ExifDataProvider = (props: any) => {
   const { path } = useCurrentPath();
-  const exifData = useMemo(() => getExifDataForPath(path), [path?.toShortString()]);
+  const exifData = useMemo(() => getExifDataForPath(path), [path?.toShortPath()]);
 
   return <ExifDataContext.Provider
     value={{

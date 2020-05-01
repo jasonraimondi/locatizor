@@ -21,7 +21,7 @@ export class Path {
     return result;
   }
 
-  toShortString() {
+  toShortPath() {
     return this.shorten(format(this.src));
   }
 
@@ -48,6 +48,6 @@ export class Path {
     if (!this.isDirectory()) {
       return this.shorten(this.src.dir);
     }
-    return this.toShortString();
+    return this.toShortPath();
   }
 }

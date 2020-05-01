@@ -1,12 +1,10 @@
 import type { MessageBoxOptions } from "electron";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, nativeImage } from "electron";
 import { LatLngTuple } from "leaflet";
 import React, { createContext, useContext, useMemo, useState } from "react";
-
-import { ElectronSettingService } from "../../main/settings_service";
+import { pin } from "zondicons";
 import { COMMANDS } from "../constants";
 import { dialog } from "../elements/clipboard";
-import { Path } from "./path";
 import { useCurrentPath } from "./use_current_path";
 import { useExifData } from "./use_exif_data";
 
@@ -34,25 +32,32 @@ const getPosition = (exifData: any, position?: [number, number]) => {
 };
 
 export const MapProvider = (props: any) => {
-  const { path } = useCurrentPath();
+  const { path, files } = useCurrentPath();
   const { exifData } = useExifData();
   const [zoom, setZoom] = useState<number>(12);
   const [userPosition, setUserPosition] = useState<[number, number] | undefined>(undefined);
-  const exifPosition = useMemo(() => getPosition(exifData), [exifData]);
 
+  const exifPosition = useMemo(() => getPosition(exifData), [exifData]);
   const updateImageGPS = () => {
-    console.log("FOO1", path?.toFullPath())
-    update(path?.toFullPath());
+    update();
   };
 
   const updateImagesForDirectory = () => {
-    console.log("FOO2", path?.getFullDirectory())
-    update(path?.getFullDirectory());
+    update(false);
   };
 
-  const update = (p?: string) => {
-    if (!p || !userPosition) {
+  const update = async (isSingleImage = true) => {
+    if (!path || !userPosition) {
       return;
+    }
+
+    let fullPath = path.getFullDirectory();
+    let shortPath = path.getDirectory();
+    const numToUpdate = isSingleImage ? 1 : files.length;
+
+    if (isSingleImage) {
+      fullPath = path.toFullPath();
+      shortPath = path.toShortPath();
     }
 
     const [lat, lng] = userPosition;
@@ -62,26 +67,14 @@ export const MapProvider = (props: any) => {
       buttons: ["Cancel", "Yes, apply updates"],
       defaultId: 0,
       title: "Apply location updates",
-      message: "Are you sure?",
-      detail: `This will update the following image:
-
-${Path.fromString(p).toShortString()}`,
-      checkboxLabel: "Disable this?",
-      checkboxChecked: ElectronSettingService.get("disable-check-dialogue") ?? false,
-      // icon: NativeImage.createFromPath(p),
+      message: `Are you sure you want to update ${numToUpdate.toLocaleString()} image${numToUpdate > 1 ? "s" : ""}?`,
+      detail: shortPath,
+      // icon: nativeImage.createFromPath(folderOpenIcon),
     };
 
-    dialog.showMessageBox(null, options).then( ({ checkboxChecked, response }: any) => {
-      ElectronSettingService.set("disable-check-dialog", checkboxChecked);
-      console.log(response);
-      console.log(checkboxChecked);
-      console.log("Callback");
-      ipcRenderer.send(COMMANDS.SetGPS, {
-        path: p,
-        lat,
-        lng,
-      });
-  });
+    const { response } = await dialog.showMessageBox(null, options);
+    if (!response) return;
+    ipcRenderer.send(COMMANDS.SetGPS, { path: fullPath, lat, lng, });
   };
 
   return <MapContext.Provider

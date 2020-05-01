@@ -1,10 +1,11 @@
-import React, { createContext, useContext, useState } from "react";
-
 import { dialog } from "@/renderer/elements/clipboard";
+import React, { createContext, useContext, useMemo, useState } from "react";
+import { getFilesForPath } from "../helpers";
 import { Path } from "./path";
 
 type CurrentPathType = {
   path: Path;
+  files: string[];
   setPath: (path: Path) => void;
   openFileSelector: () => Promise<void>;
 };
@@ -24,8 +25,11 @@ export const CurrentPathProvider = (props: any) => {
     _setPath(p);
   };
 
+  const files = useMemo<string[]>(() => getFilesForPath(path?.getFullDirectory()), [path]);
+
   return <CurrentPathContext.Provider
     value={{
+      files,
       path,
       setPath,
       openFileSelector,

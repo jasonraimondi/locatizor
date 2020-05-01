@@ -10,8 +10,8 @@ function isSelected(path: Path, name: string) {
   return path.toObject().name === name;
 }
 
-export const FileList: React.FC<{ files: string[] }> = ({ files }) => {
-  const { path, setPath } = useCurrentPath();
+export const FileList: React.FC = () => {
+  const { files, path, setPath } = useCurrentPath();
 
   let error: JSX.Element;
 

@@ -66,10 +66,9 @@ export const Actions = () => {
 
 export const List = () => {
   const { path } = useCurrentPath();
-  const files = useMemo<string[]>(() => getFilesForPath(path?.getFullDirectory()), [path]);
 
   return <ListWrapper>
-    {path ? <FileList files={files}/> : undefined}
+    {path ? <FileList/> : undefined}
   </ListWrapper>;
 };
 
