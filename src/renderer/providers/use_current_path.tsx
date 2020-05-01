@@ -16,7 +16,7 @@ const CurrentPathContext = createContext<CurrentPathType>();
 export const CurrentPathProvider = (props: any) => {
   const openFileSelector = async () => {
     const { filePaths: [dir] } = await dialog.showOpenDialog({ properties: ["openDirectory"] });
-    setPath(Path.fromString(dir));
+    if (dir && typeof dir === "string") setPath(Path.fromString(dir));
   };
 
   const [path, _setPath] = useState<Path>();
