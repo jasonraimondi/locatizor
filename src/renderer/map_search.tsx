@@ -44,7 +44,7 @@ export const MapSearch = () => {
             {
               method: "GET",
               headers: {
-                Referer: pkg.url,
+                "x-custom-referer": pkg.url,
                 "x-custom-user-agent": `${pkg.name}/${pkg.version}`,
               }
             }
