@@ -3,6 +3,7 @@ import { of, Subject, Subscription } from "rxjs";
 import { fromFetch } from "rxjs/fetch";
 import { catchError, debounceTime, map, startWith, switchMap, tap } from "rxjs/operators";
 import styled from "styled-components";
+import { ElectronSettingService } from "../main/settings_service";
 import { pkg } from "../version";
 import { useMap } from "./providers/use_map_provider";
 
@@ -21,13 +22,15 @@ type OpenStreetMapResult = {
   icon: string;
 }
 
+type Location = { description: string; latitude: string; longitude: string; };
+
 export const MapSearch = () => {
   const onSearch$ = new Subject();
   let subscription: Subscription;
 
   const { setUserPosition } = useMap();
   const [pristine, setPristine] = useState(true);
-  const [results, setResults] = useState<{ description: string; latitude: number; longitude: number; }[]>([]);
+  const [results, setResults] = useState<Location[]>([]);
 
   useEffect(() => {
     subscription = onSearch$
@@ -35,9 +38,14 @@ export const MapSearch = () => {
         // 1s rate limit requirement for open street maps nominatim
         // @see https://operations.osmfoundation.org/policies/nominatim/
         debounceTime(1000),
-        switchMap(query => {
+        switchMap((query?: unknown|string) => {
           if (!query) {
             return of([]);
+          }
+          const cacheName = `cache.query.${query}`;
+          if (ElectronSettingService.has(cacheName)) {
+            const cacheResults = ElectronSettingService.get(cacheName);
+            if (Array.isArray(cacheResults)) return of(cacheResults);
           }
           return fromFetch(
             `https://nominatim.openstreetmap.org/search?q=${query}&format=json`,
@@ -57,17 +65,17 @@ export const MapSearch = () => {
               }
             }),
             catchError(err => of({ error: true, message: err.message })),
-            tap(console.log),
-            map(res => res.map((address: OpenStreetMapResult) => ({
+            map(res => res.map((address: OpenStreetMapResult): Location => ({
               description: address.display_name,
               latitude: address.lat,
               longitude: address.lon,
             }))),
+            tap(location => ElectronSettingService.set(cacheName, location))
           );
         }),
         startWith(results),
       )
-      .subscribe(searchResults => {
+      .subscribe((searchResults: Location[]) => {
         setResults(searchResults);
       });
     return () => subscription?.unsubscribe();
