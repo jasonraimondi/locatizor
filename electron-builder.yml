@@ -1,6 +1,6 @@
 appId: app.locatizor.com
 productName: Locatizor
-copyright: Copyright © 2019 Jason Raimondi, Digital Canvas Design LLC
+copyright: Copyright © 2020 Jason Raimondi, Digital Canvas Design LLC
 
 directories:
   buildResources: resources/
