@@ -12,7 +12,7 @@ const styledComponentsTransformer = createStyledComponentsTransformer();
 
 export const baseConfig: Configuration = {
   mode: devMode ? "development" : "production",
-  devtool: devMode ? "cheap-module-eval-source-map" : false,
+  devtool: devMode ? "cheap-module-eval-source-map" : "source-map",
   context: projectRoot,
   output: {
     path: projectRoot + "/dist",

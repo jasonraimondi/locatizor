@@ -100,7 +100,7 @@ if (IS_MAC_OS) {
   template[windowMenuKey as any].submenu = windowMenuMacSubmenu;
 }
 
-if (IS_DEV_ENV) {
+// if (IS_DEV_ENV) {
   const developerMenu = {
     label: "Developer",
     submenu: [
@@ -109,6 +109,6 @@ if (IS_DEV_ENV) {
   };
   // @ts-ignore
   template.push(developerMenu);
-}
+// }
 
 export const fileMenuTemplate = template;
