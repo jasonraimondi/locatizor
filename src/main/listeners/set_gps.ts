@@ -4,7 +4,7 @@ import * as piexif from "piexifjs";
 import { renamePhoto } from "@/renderer/providers/rename";
 
 const originalRegex = /\.original\./;
-const isOriginal = (name: string): boolean => originalRegex.test(name);
+export const isOriginal = (name: string): boolean => originalRegex.test(name);
 const hasOriginal = (name: string): boolean => existsSync(renamePhoto(name));
 
 export const setGpsForPhoto = (path: string, { lat, lng }: { lat: number, lng: number }): boolean => {
