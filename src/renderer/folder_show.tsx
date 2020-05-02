@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { Button } from "./elements/elements";
 import { Image } from "./elements/image";
 import { FileList } from "./file_list";
-import { getFilesForPath } from "./helpers";
 import { MapSearch } from "./map_search";
 import { useCurrentPath } from "./providers/use_current_path";
 import { useExifData } from "./providers/use_exif_data";
@@ -33,10 +32,11 @@ export const Details = () => {
     <ImageWrapper>
       <Image src={path.toFullPath()} style={{ height: "100%" }}/>
     </ImageWrapper>
-    <p>Longitude: {JSON.stringify(exifData.longitude) ?? "?"}</p>
-    <p>Latitude: {JSON.stringify(exifData.latitude) ?? "?"}</p>
-    <p>Width: {JSON.stringify(exifData.width) ?? "?"}</p>
-    <p>Height: {JSON.stringify(exifData.height) ?? "?"}</p>
+    <p>Longitude: {exifData.longitude ?? "?"}</p>
+    <p>Latitude: {exifData.latitude ?? "?"}</p>
+    <p>Width: {exifData.width ?? "?"}</p>
+    <p>Height: {exifData.height ?? "?"}</p>
+    <p>Capture Date: {exifData.captureDate ?? "?"}</p>
   </DetailsWrapper>;
 };
 
