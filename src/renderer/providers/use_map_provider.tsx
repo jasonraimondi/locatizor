@@ -18,8 +18,9 @@ type MapType = {
   updateImageGPS: () => void;
 };
 
-const START_LAT = 0;
-const START_LNG = 0;
+// 200 santa monica pier
+const START_LAT = 34.0108235;
+const START_LNG = -118.4956453;
 
 // @ts-ignore
 const MapContext = createContext<MapType>();
