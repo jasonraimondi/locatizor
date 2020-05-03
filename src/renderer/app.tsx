@@ -4,9 +4,12 @@ import { useCurrentPath } from "@/renderer/providers/use_current_path";
 import React, { DragEvent } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
+import { ElectronSettingService } from "../main/settings_service";
 import { pkg } from "../version";
 import { Draggable } from "./elements/elements";
 import { Settings } from "./settings";
+
+console.log(`allow analytics: ${(!ElectronSettingService.has("analytics-opt-out")).toString()}`);
 
 export const App: React.FC = () => {
   const { setPath } = useCurrentPath();

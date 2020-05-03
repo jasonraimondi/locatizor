@@ -9,9 +9,12 @@ import { ThemeProvider } from "styled-components";
 
 import "./fathom";
 import { App } from "./renderer/app";
+import { openLinkExternally } from "./renderer/open_link_externally";
 import { ExifDataProvider } from "./renderer/providers/use_exif_data";
 import { MapProvider } from "./renderer/providers/use_map_provider";
 import { theme } from "./theme";
+
+document.addEventListener("click", openLinkExternally, false);
 
 export default ReactDOM.render(
   <CurrentPathProvider>
