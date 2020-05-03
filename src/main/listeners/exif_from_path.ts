@@ -51,11 +51,16 @@ const formatExifData = ({ exifObj, imageProbe }: { exifObj: IExif; imageProbe: a
   if (IS_DEV_ENV) console.log(exifObj);
 
   try {
-    result.captureDate =
-      // @ts-ignore
-      dayjs(exifObj?.Exif?.[piexif.TagValues.ExifIFD.DateTimeOriginal]?.replace?.(/\:/, "-") ?? 0).toISOString();
-  } catch (e) {
-    console.log(e);
+    // @ts-ignore
+    const date = dayjs(exifObj?.Exif?.[piexif.TagValues.ExifIFD.DateTimeOriginal]?.replace?.(/\:/, "-") ?? 0)
+      .toDate();
+    const options = {
+      year: "numeric", month: "long", day: "numeric",
+      hour: "numeric", minute: "numeric"
+    };
+    result.captureDate = new Intl.DateTimeFormat("default", options).format(date);
+    // tslint:disable-next-line:no-empty
+  } catch (_) {
   }
 
   result.longitudeRef = exifObj?.GPS?.[piexif.TagValues.GPSIFD.GPSLongitudeRef];
