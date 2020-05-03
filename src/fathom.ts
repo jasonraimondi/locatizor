@@ -18,7 +18,7 @@ if (allowAnalytics) {
         o.src = t;
         o.id = "fathom-script";
         m.parentNode.insertBefore(o, m);
-    })(document, window, "//analytics.designcanvas.digital/tracker.js", "fathom");
+    })(document, window, "https://analytics.designcanvas.digital/tracker.js", "fathom");
     fathom("set", "siteId", "BHMFW");
     fathom("trackPageview");
 }
