@@ -11,7 +11,8 @@ export const setGpsForPhoto = (path: string, { lat, lng }: { lat: number, lng: n
   const noFileFound = !existsSync(path);
 
   if (noFileFound) {
-    throw new Error("file not found");
+    console.log("no file found");
+    return false;
   }
 
   const jpgBinary = readFileSync(path).toString("binary");
@@ -39,7 +40,7 @@ export const setGpsForPhoto = (path: string, { lat, lng }: { lat: number, lng: n
   const newJpegBinary = piexif.insert(exifBytes, jpgBinary);
   const newJpeg = Buffer.from(newJpegBinary, "binary");
   writeFileSync(path, newJpeg);
-
+  console.log("successfully updated gps for", path);
   return true;
 };
 

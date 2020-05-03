@@ -1,11 +1,11 @@
-import { Map } from "@/renderer/modules/photo/map";
-import React, { useMemo } from "react";
+import React from "react";
 
 import styled from "styled-components";
 import { Button } from "./elements/elements";
 import { Image } from "./elements/image";
 import { FileList } from "./file_list";
 import { MapSearch } from "./map_search";
+import { Map } from "./modules/map";
 import { useCurrentPath } from "./providers/use_current_path";
 import { useExifData } from "./providers/use_exif_data";
 import { useMap } from "./providers/use_map_provider";
@@ -27,6 +27,13 @@ export const FolderShow = () => {
 export const Details = () => {
   const { exifData } = useExifData();
   const { path } = useCurrentPath();
+
+  if (path?.isDirectory()) {
+    return <div>
+      <p>Pick a file to see some info about it.</p>
+      <p>Select a location on the map to the left.</p>
+    </div>;
+  }
 
   return <DetailsWrapper>
     <ImageWrapper>

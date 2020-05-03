@@ -1,4 +1,5 @@
 import { format, parse, ParsedPath } from "path";
+import fs from "fs";
 
 const homedir = process.env.HOME;
 const rxp = new RegExp(homedir ?? "");
@@ -30,7 +31,7 @@ export class Path {
   }
 
   isDirectory() {
-    return this.src.ext === "";
+    return fs.lstatSync(this.toFullPath()).isDirectory();
   }
 
   toFullPath() {

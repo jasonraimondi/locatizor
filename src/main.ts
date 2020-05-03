@@ -50,24 +50,19 @@ app.on("window-all-closed", () => {
 });
 
 ipcMain.on(COMMANDS.SetGPS, (event, { path, lat, lng }: SetGpsArgs) => {
-  console.log("path", path, lat, lng);
-
   const p = Path.fromString(path);
   const errors: string[] = [];
 
   if (p.isDirectory()) {
-    console.log("is directory")
     const files = getFiles(p.getFullDirectory());
     for (const file of files) {
       try {
-        console.log(file);
         setGpsForPhoto(file, { lat, lng });
       } catch (e) {
         errors.push(e.message);
       }
     }
   } else {
-    console.log("is not directory")
     setGpsForPhoto(p.toFullPath(), { lat, lng });
   }
 
@@ -75,18 +70,3 @@ ipcMain.on(COMMANDS.SetGPS, (event, { path, lat, lng }: SetGpsArgs) => {
     errors
   };
 });
-//
-// ipcMain.on(COMMANDS.ExifFromPath, (event, path) => {
-//   try {
-//     event.returnValue = {
-//       success: true,
-//       data: getExifFromPath(path),
-//     };
-//   } catch (e) {
-//     console.log(e);
-//     event.returnValue = {
-//       success: false,
-//       data: {},
-//     };
-//   }
-// });

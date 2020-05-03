@@ -2,7 +2,7 @@ import { useMap } from "@/renderer/providers/use_map_provider";
 import { LeafletEvent } from "leaflet";
 import React from "react";
 import { Map as OpenStreetMap, Marker, Popup, TileLayer } from "react-leaflet";
-import { RedMarker, YellowMarker } from "../../../leaflet_hackfix";
+import { RedMarker, YellowMarker } from "../../leaflet_hackfix";
 
 type Props = { enabled?: boolean };
 
