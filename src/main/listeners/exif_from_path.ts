@@ -1,4 +1,3 @@
-import { IS_DEV_ENV } from "@/environment";
 import dayjs from "dayjs";
 import { existsSync, readFileSync } from "fs";
 import * as piexif from "piexifjs";
@@ -47,8 +46,6 @@ type ExifKeys = "longitudeRef" |
 
 const formatExifData = ({ exifObj, imageProbe }: { exifObj: IExif; imageProbe: any }): FormattedExifData => {
   const result: FormattedExifData = {};
-
-  if (IS_DEV_ENV) console.log(exifObj);
 
   try {
     // @ts-ignore

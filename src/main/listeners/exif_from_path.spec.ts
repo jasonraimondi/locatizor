@@ -7,8 +7,8 @@ describe("ExifFromPath", () => {
 
   it("reads and parses exif data", () => {
     const exifData = getExifFromPath(filePath);
-    expect(exifData.height).toBe(3024);
-    expect(exifData.width).toBe(4032);
+    expect(exifData.width).toBe("3024px");
+    expect(exifData.height).toBe("4032px");
     expect(exifData.latitude).toBe(34.001305555555554);
     expect(exifData.latitudeRef).toBe("N");
     expect(exifData.longitude).toBe(-118.46744444444445);
