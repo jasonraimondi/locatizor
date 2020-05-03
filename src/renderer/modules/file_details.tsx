@@ -9,11 +9,11 @@ export const Details = () => {
   const { path } = useCurrentPath();
 
   if (path?.isDirectory()) {
-    return <div>
+    return <Notes>
       <p>Pick a file to see some info about it.</p>
       <p>Select a location on the map to the left.</p>
-      <p>Note: If you </p>
-    </div>;
+      <p>We are only looking for <FileType>.jpg</FileType> and <FileType>.jpeg</FileType> files at this time.</p>
+    </Notes>;
   }
 
   const { latitude, longitude, width, height, captureDate } = exifData;
@@ -31,6 +31,17 @@ export const Details = () => {
     </Describe>
   </DetailsWrapper>;
 };
+
+const Notes = styled.div`
+  text-align: center;
+  margin: 1rem 0;
+`;
+
+const FileType = styled.strong`
+  background-color: ${props => props.theme.gray["300"]};
+  margin: 0 0.2rem;
+  padding: 0.1rem 0.45rem;
+`;
 
 const Describe = styled.div`
   padding: 0.75rem 0.5rem 0;
