@@ -7,6 +7,7 @@ type CurrentPathType = {
   path: Path;
   files: string[];
   setPath: (path: Path) => void;
+  clearPath: () => void;
   openFileSelector: () => Promise<void>;
 };
 
@@ -33,6 +34,9 @@ export const CurrentPathProvider = (props: any) => {
       path,
       setPath,
       openFileSelector,
+      clearPath: () => {
+        _setPath(undefined);
+      },
       pathHistory: history,
     }}
     {...props}

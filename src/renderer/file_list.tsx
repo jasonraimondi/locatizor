@@ -1,9 +1,9 @@
-import { basename } from "path";
-import React  from "react";
-import styled, { css } from "styled-components";
+import { Path } from "@/renderer/providers/path";
 
 import { useCurrentPath } from "@/renderer/providers/use_current_path";
-import { Path } from "@/renderer/providers/path";
+import { basename } from "path";
+import React from "react";
+import styled, { css } from "styled-components";
 import { allowedPhotoExtensions } from "../is_photo";
 
 function isSelected(path: Path, name: string) {
@@ -28,27 +28,39 @@ export const FileList: React.FC = () => {
     setPath(Path.fromString(file));
   };
 
+  let content: any;
+
   if (error!) {
-    return <ErrorWrapper>{error!}</ErrorWrapper>;
+    content = <ErrorWrapper>{error!}</ErrorWrapper>;
+  } else {
+    content = <FileListWrapper>
+      {files.map((file, idx) => {
+        const name = basename(file);
+        const _isSelected = isSelected(path, name);
+        return (
+          <ListItem
+            key={idx}
+            isSelected={_isSelected}
+            className={_isSelected ? "isSelected" : undefined}
+            onClick={() => handleClick(file)}
+          >
+            {name}
+          </ListItem>
+        );
+      })}
+    </FileListWrapper>;
   }
 
-  return <FileListWrapper>
-    {files.map((file, idx) => {
-      const name = basename(file);
-      const _isSelected = isSelected(path, name);
-      return (
-        <ListItem
-          key={idx}
-          isSelected={_isSelected}
-          className={_isSelected ? "isSelected" : undefined}
-                      onClick={() => handleClick(file)}
-        >
-          {name}
-        </ListItem>
-      );
-    })}
-  </FileListWrapper>;
+  return <ListWrapper>
+    {path ? content : undefined}
+  </ListWrapper>;
 };
+
+const ListWrapper = styled.div`
+  grid-area: list;
+  background-color: ${props => props.theme.gray["100"]};
+  overflow-y: auto;
+`;
 
 const ErrorWrapper = styled.div`
   flex: 1;
