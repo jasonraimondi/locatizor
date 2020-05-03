@@ -1,10 +1,12 @@
-import React, { DragEvent } from "react";
-import styled from "styled-components";
-
 import { Home } from "@/renderer/home";
-import { useCurrentPath } from "@/renderer/providers/use_current_path";
 import { Path } from "@/renderer/providers/path";
+import { useCurrentPath } from "@/renderer/providers/use_current_path";
+import React, { DragEvent } from "react";
+import { Route, Switch } from "react-router-dom";
+import styled from "styled-components";
+import { pkg } from "../version";
 import { Draggable } from "./elements/elements";
+import { Settings } from "./settings";
 
 export const App: React.FC = () => {
   const { setPath } = useCurrentPath();
@@ -22,9 +24,16 @@ export const App: React.FC = () => {
   };
 
   return <AppWrapper>
-    <DraggableTopbar>Locatizor</DraggableTopbar>
+    <DraggableTopbar>{pkg.title}</DraggableTopbar>
     <MainContainer onDragOver={onDragOver} onDrop={onDrop}>
-      <Home />
+      <Switch>
+        <Route path="/settings">
+          <Settings/>
+        </Route>
+        <Route path="/">
+          <Home/>
+        </Route>
+      </Switch>
     </MainContainer>
   </AppWrapper>;
 };

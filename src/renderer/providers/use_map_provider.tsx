@@ -65,7 +65,7 @@ export const MapProvider = (props: any) => {
 
     const options: MessageBoxOptions = {
       type: "question",
-      buttons: ["Cancel", "Yes, apply updates"],
+      buttons: ["Cancel", `Yes, apply update${numToUpdate > 1 ? "s" : ""}`],
       defaultId: 0,
       title: "Apply location updates",
       message: `Are you sure you want to update ${numToUpdate.toLocaleString()} image${numToUpdate > 1 ? "s" : ""}?`,

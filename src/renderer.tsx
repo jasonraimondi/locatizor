@@ -1,24 +1,26 @@
-import "@/renderer/styles/style.css";
 import "@/leaflet_hackfix";
+import { CurrentPathProvider } from "@/renderer/providers/use_current_path";
+import "@/renderer/styles/style.css";
 
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
-import { App } from "@/renderer/app";
-import { CurrentPathProvider } from "@/renderer/providers/use_current_path";
-import { theme } from "./theme";
-import { MapProvider } from "./renderer/providers/use_map_provider";
+import "./fathom";
+import { App } from "./renderer/app";
 import { ExifDataProvider } from "./renderer/providers/use_exif_data";
-
-import "./fathom"
+import { MapProvider } from "./renderer/providers/use_map_provider";
+import { theme } from "./theme";
 
 export default ReactDOM.render(
   <CurrentPathProvider>
     <ExifDataProvider>
       <MapProvider>
         <ThemeProvider theme={theme}>
-          <App/>
+          <Router>
+            <App/>
+          </Router>
         </ThemeProvider>
       </MapProvider>
     </ExifDataProvider>

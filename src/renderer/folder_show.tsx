@@ -30,7 +30,7 @@ const FolderShowWrapper = styled.div`
     "folder folder"
     "list list"
     "separator separator"
-    "map details"
+    "details map"
     "actions actions";
   grid-template-rows: auto 1fr 10px 50% auto;
   grid-template-columns: 50% 50%;

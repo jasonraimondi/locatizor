@@ -16,27 +16,49 @@ export const Details = () => {
     </div>;
   }
 
+  const { latitude, longitude, width, height, captureDate } = exifData;
+
   return <DetailsWrapper>
     <ImageWrapper>
       <Image src={path.toFullPath()} style={{ height: "100%" }}/>
     </ImageWrapper>
-    <p>Longitude: {exifData.longitude ?? "?"}</p>
-    <p>Latitude: {exifData.latitude ?? "?"}</p>
-    <p>Width: {exifData.width ?? "?"}</p>
-    <p>Height: {exifData.height ?? "?"}</p>
-    <p>Capture Date: {exifData.captureDate ?? "?"}</p>
+    <Describe>
+      <p><Label>Longitude</Label> {longitude ?? "unset"}</p>
+      <p><Label>Latitude</Label> {latitude ?? "unset"}</p>
+      {width ? <p><Label>Width</Label> {width}</p> : undefined}
+      {height ? <p><Label>Height</Label> {height}</p> : undefined}
+      {captureDate ? <p><Label>Capture Date</Label> {captureDate}</p> : undefined}
+    </Describe>
   </DetailsWrapper>;
 };
 
+const Describe = styled.div`
+  padding: 0.75rem 0.5rem 0;
+`;
+
 const ImageWrapper = styled.div`
+  background-color: ${props => props.theme.gray["400"]};
   height: 150px;
-  display: flex;
-  align-items: center;
+  text-align: center;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid ${props => props.theme.gray["800"]};
+
+  & > img {
+    margin-left: auto;
+    margin-right: auto;
+  }
+`;
+
+const Label = styled.span`
+  padding: 3px 5px;
+  background-color: ${props => props.theme.gray["400"]};
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
 `;
 
 const DetailsWrapper = styled.div`
   grid-area: details;
-  background-color: ${props => props.theme.gray["400"]};
+  background-color: ${props => props.theme.gray["200"]};
   overflow-y: auto;
-  padding: 0.5rem;
 `;

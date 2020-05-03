@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
 
-export const theme: DefaultTheme = {
+export const theme: DefaultTheme & any = {
   transparent: "transparent",
   black: "#000",
   white: "#fff",
@@ -15,8 +15,8 @@ export const theme: DefaultTheme = {
     800: "#2d3748",
     900: "#1a202c",
   },
-  main: "tomato",
+  main: "#4299E1",
   topbar: {
-    height: "30px",
+    height: "25px",
   },
 };
