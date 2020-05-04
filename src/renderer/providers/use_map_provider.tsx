@@ -68,9 +68,9 @@ export const MapProvider = (props: any) => {
       buttons: ["Cancel", `Yes, apply update${numToUpdate > 1 ? "s" : ""}`],
       defaultId: 0,
       title: "Apply location updates",
-      message: `Are you sure you want to update ${numToUpdate.toLocaleString()} image${numToUpdate > 1 ? "s" : ""}?`,
-      detail: shortPath,
-      // icon: nativeImage.createFromPath(folderOpenIcon),
+      message: `Are you sure you want to apply this location to ${numToUpdate.toLocaleString()} image${numToUpdate > 1 ? "s" : ""}?`,
+      detail: `The changes will be applied to the following directory:
+    ${shortPath}`,
     };
 
     const { response } = await dialog.showMessageBox(null, options);

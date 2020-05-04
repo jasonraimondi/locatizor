@@ -1,6 +1,7 @@
+// @ts-nocheck
 import { DefaultTheme } from "styled-components";
 
-export const theme: DefaultTheme & any = {
+const colors = {
   transparent: "transparent",
   black: "#000",
   white: "#fff",
@@ -16,7 +17,12 @@ export const theme: DefaultTheme & any = {
     900: "#1a202c",
   },
   main: "#4299E1",
+};
+
+export const theme: DefaultTheme = {
+  ...colors,
   topbar: {
     height: "25px",
   },
+  insideBorder: `1px solid ${colors.gray["800"]}`,
 };

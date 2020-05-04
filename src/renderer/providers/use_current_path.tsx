@@ -9,6 +9,7 @@ type CurrentPathType = {
   setPath: (path: Path) => void;
   clearPath: () => void;
   openFileSelector: () => Promise<void>;
+  unselectFile(): void;
 };
 
 // @ts-ignore
@@ -19,6 +20,10 @@ export const CurrentPathProvider = (props: any) => {
     const { filePaths: [dir] } = await dialog.showOpenDialog({ properties: ["openDirectory"] });
     if (dir && typeof dir === "string") setPath(Path.fromString(dir));
   };
+
+  const unselectFile = () => {
+    if (path) setPath(Path.fromString(path.getFullDirectory()));
+  }
 
   const [path, _setPath] = useState<Path>();
 
@@ -34,6 +39,7 @@ export const CurrentPathProvider = (props: any) => {
       path,
       setPath,
       openFileSelector,
+      unselectFile,
       clearPath: () => {
         _setPath(undefined);
       },

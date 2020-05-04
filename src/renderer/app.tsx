@@ -1,7 +1,7 @@
 import { Home } from "@/renderer/home";
 import { Path } from "@/renderer/providers/path";
 import { useCurrentPath } from "@/renderer/providers/use_current_path";
-import React, { DragEvent } from "react";
+import React, { DragEvent, useState } from "react";
 import { Route, Switch } from "react-router-dom";
 import styled from "styled-components";
 import { ElectronSettingService } from "../main/settings_service";
@@ -13,9 +13,11 @@ console.log(`allow analytics: ${(!ElectronSettingService.has("analytics-opt-out"
 
 export const App: React.FC = () => {
   const { setPath } = useCurrentPath();
+  // const [isDragging, setIsDragging] = useState(false);
 
   const onDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
+    // setIsDragging(true);
   };
 
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
@@ -24,6 +26,7 @@ export const App: React.FC = () => {
     if (draggedPath) {
       setPath(Path.fromString(draggedPath));
     }
+    // setIsDragging(false);
   };
 
   return <AppWrapper>

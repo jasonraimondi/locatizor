@@ -34,6 +34,7 @@ const SvgWrapper = styled.span<{
     width: 100%;
     height: 100%;
     fill: currentColor;
+    stroke: currentColor;
     color: inherit;
   //stroke: currentColor;
   }

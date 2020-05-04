@@ -4,6 +4,7 @@ import "styled-components";
 // and extend them!
 declare module "styled-components" {
   export interface DefaultTheme {
+    insideBorder: string;
     white: string;
     black: string;
     gray: { [key in ColorScale]: string };

@@ -16,7 +16,6 @@ export const FolderShow = () => {
     </MapWrapper>
     <Details/>
     <FolderSelect/>
-    <Separator/>
     <FileList />
     <Actions/>
   </FolderShowWrapper>;
@@ -28,12 +27,11 @@ const FolderShowWrapper = styled.div`
   display: grid;
   grid-template-areas:
     "folder folder"
-    "list list"
-    "separator separator"
-    "details map"
+    "list details"
+    "list map"
     "actions actions";
-  grid-template-rows: auto 1fr 10px 50% auto;
-  grid-template-columns: 50% 50%;
+  grid-template-rows: auto 1fr 50% auto;
+  grid-template-columns: 1fr 1fr;
 `;
 
 const Separator = styled.div`

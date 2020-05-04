@@ -29,7 +29,10 @@ export const Settings = () => {
             We only track "app was opened" by a unique user and nothing else.
             <br/>
             No identifiable information is saved.
-            See <A className="open-link-externally" href="https://usefathom.com/">https://usefathom.com/</A>
+            Check out
+            <A className="open-link-externally"
+               rel="noreferrer"
+               href="https://usefathom.com/data">https://usefathom.com/data</A>
           </small>
         </CheckBoxLabel>
       </div>

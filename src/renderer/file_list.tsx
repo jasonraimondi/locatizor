@@ -7,11 +7,11 @@ import styled, { css } from "styled-components";
 import { allowedPhotoExtensions } from "../is_photo";
 
 function isSelected(path: Path, name: string) {
-  return path.toObject().name === name;
+  return basename(path.toFullPath()) === name;
 }
 
 export const FileList: React.FC = () => {
-  const { files, path, setPath } = useCurrentPath();
+  const { files, path, setPath, unselectFile } = useCurrentPath();
 
   let error: JSX.Element;
 
@@ -24,7 +24,6 @@ export const FileList: React.FC = () => {
   }
 
   const handleClick = (file: string) => {
-    console.log(JSON.stringify(file));
     setPath(Path.fromString(file));
   };
 
@@ -42,7 +41,7 @@ export const FileList: React.FC = () => {
             key={idx}
             isSelected={_isSelected}
             className={_isSelected ? "isSelected" : undefined}
-            onClick={() => handleClick(file)}
+            onClick={() => _isSelected ? unselectFile() : handleClick(file)}
           >
             {name}
           </ListItem>
@@ -60,6 +59,7 @@ const ListWrapper = styled.div`
   grid-area: list;
   background-color: ${props => props.theme.gray["100"]};
   overflow-y: auto;
+  border-right: ${props => props.theme.insideBorder};
 `;
 
 const ErrorWrapper = styled.div`
@@ -92,10 +92,13 @@ export const ListItem = styled.li<{ isSelected?: boolean }>`
   flex: 1;
   padding: 0.5rem 0.8rem;
   border-bottom: 1px solid ${props => props.theme.gray["400"]};
-  ${props => props.isSelected && css`
-    background-color: teal;
-  `}
   &:hover {
     background-color: ${props => props.theme.gray["200"]};
+    ${props => props.isSelected && css`
+      background-color: ${props.theme.gray["400"]};
+    `}
   }
+  ${props => props.isSelected && css`
+    background-color: ${props.theme.gray["400"]};
+  `}
 `;

@@ -6,13 +6,31 @@ import { useExifData } from "../providers/use_exif_data";
 
 export const Details = () => {
   const { exifData } = useExifData();
-  const { path } = useCurrentPath();
+  const { path, unselectFile } = useCurrentPath();
 
   if (path?.isDirectory()) {
     return <Notes>
-      <p>Pick a file to see some info about it.</p>
-      <p>Select a location on the map to the left.</p>
-      <p>We are only looking for <FileType>.jpg</FileType> and <FileType>.jpeg</FileType> files at this time.</p>
+        <li className="h4">Tips:</li>
+        <li>
+          &bull;
+          Search for a location on the map, or <i>painfully</i> click and drag the map to the desired spot.
+        </li>
+        <li>
+          &bull;
+          Select file to see some info about it.
+        </li>
+        <li>
+          &bull;
+          You can apply an update to an <strong>individual file</strong>, or an <strong>entire directory</strong>.
+        </li>
+        <li>
+          &bull;
+          We are only looking for <FileType>.jpg</FileType> and <FileType>.jpeg</FileType> files.
+        </li>
+        <li>
+          &bull;
+          Files that include <FileType>.original.</FileType> will be ignored, and omitted from the list.
+        </li>
     </Notes>;
   }
 
@@ -25,22 +43,25 @@ export const Details = () => {
     <Describe>
       <p><Label>Longitude</Label> {longitude ?? "unset"}</p>
       <p><Label>Latitude</Label> {latitude ?? "unset"}</p>
-      {width ? <p><Label>Width</Label> {width}</p> : undefined}
-      {height ? <p><Label>Height</Label> {height}</p> : undefined}
+      {/*{width ? <p><Label>Width</Label> {width}</p> : undefined}*/}
+      {/*{height ? <p><Label>Height</Label> {height}</p> : undefined}*/}
       {captureDate ? <p><Label>Capture Date</Label> {captureDate}</p> : undefined}
     </Describe>
   </DetailsWrapper>;
 };
 
-const Notes = styled.div`
-  text-align: center;
-  margin: 1rem 0;
+const Notes = styled.ul`
+  //text-align: center;
+  padding: 1rem 0;
+  border-bottom: ${props => props.theme.insideBorder};
 `;
 
 const FileType = styled.strong`
   background-color: ${props => props.theme.gray["300"]};
+  //font-size: 0.8em;
   margin: 0 0.2rem;
   padding: 0.1rem 0.45rem;
+  border-radius: 0.25rem;
 `;
 
 const Describe = styled.div`
@@ -48,15 +69,14 @@ const Describe = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-  background-color: ${props => props.theme.gray["400"]};
+  // background-color: ${props => props.theme.gray["400"]};
   height: 150px;
-  text-align: center;
+  //text-align: center;
   padding: 0.25rem 0;
-  border-bottom: 1px solid ${props => props.theme.gray["800"]};
 
   & > img {
-    margin-left: auto;
-    margin-right: auto;
+    //margin-left: auto;
+    //margin-right: auto;
   }
 `;
 
@@ -72,4 +92,5 @@ const DetailsWrapper = styled.div`
   grid-area: details;
   background-color: ${props => props.theme.gray["200"]};
   overflow-y: auto;
+  border-bottom: ${props => props.theme.insideBorder};
 `;

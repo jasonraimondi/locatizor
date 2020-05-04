@@ -1,8 +1,8 @@
-import styled from "styled-components";
-import React from "react";
+import { SVG } from "@/renderer/elements/svg";
 
 import { useCurrentPath } from "@/renderer/providers/use_current_path";
-import { SVG } from "@/renderer/elements/svg";
+import React from "react";
+import styled from "styled-components";
 
 export const FolderOpen = () => {
   const folderOpenIcon = require("zondicons/folder-outline.svg");
@@ -45,4 +45,7 @@ const FolderOpenWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &:drop {
+    background-color: orange;
+  }
 `;
