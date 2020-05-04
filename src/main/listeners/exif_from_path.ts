@@ -2,8 +2,6 @@ import dayjs from "dayjs";
 import { existsSync, readFileSync } from "fs";
 import * as piexif from "piexifjs";
 import { GPSHelper, IExif } from "piexifjs";
-// @ts-ignore
-import probe from "probe-image-size";
 
 export const getExifFromPath = (path?: string): FormattedExifData => {
   if (!path || !existsSync(path)) {
@@ -18,19 +16,8 @@ export const getExifFromPath = (path?: string): FormattedExifData => {
   delete exifObj.Exif?.[piexif.TagValues.ExifIFD.MakerNote];
   delete exifObj.GPS?.[piexif.TagValues.ExifIFD.MakerNote];
 
-  const imageProbe: ImageProbe = probe.sync(file);
-
-  return formatExifData({ exifObj, imageProbe });
+  return formatExifData({ exifObj });
 };
-
-type ImageProbe = {
-  width: number;
-  height: number;
-  type: string;
-  mime: string;
-  wUnits: string;
-  hUnits: string;
-}
 
 export type FormattedExifData = {
   [key in ExifKeys]?: string | number | number[] | number[][];
@@ -40,11 +27,9 @@ type ExifKeys = "longitudeRef" |
   "longitude" |
   "latitudeRef" |
   "latitude" |
-  "width" |
-  "height" |
   "captureDate"
 
-const formatExifData = ({ exifObj, imageProbe }: { exifObj: IExif; imageProbe: any }): FormattedExifData => {
+const formatExifData = ({ exifObj }: { exifObj: IExif }): FormattedExifData => {
   const result: FormattedExifData = {};
 
   try {
@@ -74,7 +59,5 @@ const formatExifData = ({ exifObj, imageProbe }: { exifObj: IExif; imageProbe: a
     result.latitude = GPSHelper.dmsRationalToDeg(latitude, result.latitudeRef);
   }
 
-  result.width = `${imageProbe.width}${imageProbe.wUnits}`;
-  result.height = `${imageProbe.height}${imageProbe.hUnits}`;
   return result;
 };

@@ -6,35 +6,30 @@ import { useExifData } from "../providers/use_exif_data";
 
 export const Details = () => {
   const { exifData } = useExifData();
-  const { path, unselectFile } = useCurrentPath();
+  const { path } = useCurrentPath();
 
   if (path?.isDirectory()) {
     return <Notes>
         <li className="h4">Tips:</li>
         <li>
-          &bull;
           Search for a location on the map, or <i>painfully</i> click and drag the map to the desired spot.
         </li>
         <li>
-          &bull;
           Select file to see some info about it.
         </li>
         <li>
-          &bull;
           You can apply an update to an <strong>individual file</strong>, or an <strong>entire directory</strong>.
         </li>
         <li>
-          &bull;
           We are only looking for <FileType>.jpg</FileType> and <FileType>.jpeg</FileType> files.
         </li>
         <li>
-          &bull;
           Files that include <FileType>.original.</FileType> will be ignored, and omitted from the list.
         </li>
     </Notes>;
   }
 
-  const { latitude, longitude, width, height, captureDate } = exifData;
+  const { latitude, longitude, captureDate } = exifData;
 
   return <DetailsWrapper>
     <ImageWrapper>
@@ -43,15 +38,13 @@ export const Details = () => {
     <Describe>
       <p><Label>Longitude</Label> {longitude ?? "unset"}</p>
       <p><Label>Latitude</Label> {latitude ?? "unset"}</p>
-      {/*{width ? <p><Label>Width</Label> {width}</p> : undefined}*/}
-      {/*{height ? <p><Label>Height</Label> {height}</p> : undefined}*/}
       {captureDate ? <p><Label>Capture Date</Label> {captureDate}</p> : undefined}
     </Describe>
   </DetailsWrapper>;
 };
 
 const Notes = styled.ul`
-  //text-align: center;
+  list-style-type: disc;
   padding: 1rem 0;
   border-bottom: ${props => props.theme.insideBorder};
 `;
