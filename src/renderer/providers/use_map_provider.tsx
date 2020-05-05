@@ -69,7 +69,7 @@ export const MapProvider = (props: any) => {
       defaultId: 0,
       title: "Apply location updates",
       message: `Are you sure you want to apply this location to ${numToUpdate.toLocaleString()} image${numToUpdate > 1 ? "s" : ""}?`,
-      detail: `The changes will be applied to the following directory:
+      detail: `The changes will be applied to the following ${isSingleImage ? "image" : "directory"}:
     ${shortPath}`,
     };
 

@@ -45,8 +45,8 @@ export const Details = () => {
 
 const Notes = styled.ul`
   list-style-type: disc;
-  padding: 1rem 0;
   border-bottom: ${props => props.theme.insideBorder};
+  padding: 0.5rem 0.5rem 0;
 `;
 
 const FileType = styled.strong`
@@ -58,7 +58,7 @@ const FileType = styled.strong`
 `;
 
 const Describe = styled.div`
-  padding: 0.75rem 0.5rem 0;
+  padding-top: 0.75rem;
 `;
 
 const ImageWrapper = styled.div`
@@ -86,4 +86,5 @@ const DetailsWrapper = styled.div`
   background-color: ${props => props.theme.gray["200"]};
   overflow-y: auto;
   border-bottom: ${props => props.theme.insideBorder};
+  padding: 0.5rem 0.5rem 0;
 `;

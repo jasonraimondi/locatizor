@@ -17,7 +17,7 @@
     "test": "jest",
     "prestart": "run-s clean",
     "start": "run-p serve:renderer webpack:main-watch serve:main",
-    "serve:main": "sleep 12 && electron ./dist",
+    "serve:main": "sleep 30 && electron ./dist",
     "serve:renderer": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack-dev-server --config build/webpack.renderer.ts",
     "webpack:main-watch": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json webpack --watch --config build/webpack.main.ts",
     "webpack:main-prod": "cross-env TS_NODE_PROJECT=tsconfig.webpack.json NODE_ENV=production webpack --config build/webpack.main.ts",

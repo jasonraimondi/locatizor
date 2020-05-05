@@ -8,6 +8,7 @@
 @import "_svg.css";
 
 @import "~leaflet/dist/leaflet.css";
+@import "_leaflet_hackfix.css";
 
 /**
 Move leaflet zoom to the right hand side

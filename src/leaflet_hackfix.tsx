@@ -25,12 +25,12 @@ export const YellowMarker = new L.Icon({
   iconUrl: yellowIcon,
   iconRetinaUrl: yellowIcon,
   iconSize: new L.Point(60, 75),
-  className: "leaflet-div-icon"
+  className: "leaflet-yellow-icon leaflet-div-icon"
 });
 
 export const RedMarker = new L.Icon({
   iconUrl: redIcon,
   iconRetinaUrl: redIcon,
   iconSize: new L.Point(60, 75),
-  className: "leaflet-div-icon"
+  className: "leaflet-red-icon leaflet-div-icon"
 });
