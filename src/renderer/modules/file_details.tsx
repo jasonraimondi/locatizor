@@ -9,24 +9,7 @@ export const Details = () => {
   const { path } = useCurrentPath();
 
   if (path?.isDirectory()) {
-    return <Notes>
-        <li className="h4">Tips:</li>
-        <li>
-          Search for a location on the map, or <i>painfully</i> click and drag the map to the desired spot.
-        </li>
-        <li>
-          Select file to see some info about it.
-        </li>
-        <li>
-          You can apply an update to an <strong>individual file</strong>, or an <strong>entire directory</strong>.
-        </li>
-        <li>
-          We are only looking for <FileType>.jpg</FileType> and <FileType>.jpeg</FileType> files.
-        </li>
-        <li>
-          Files that include <FileType>.original.</FileType> will be ignored, and omitted from the list.
-        </li>
-    </Notes>;
+    return <TipsSection/>;
   }
 
   const { latitude, longitude, captureDate } = exifData;
@@ -36,17 +19,31 @@ export const Details = () => {
       <Image src={path.toFullPath()} style={{ height: "100%" }}/>
     </ImageWrapper>
     <Describe>
-      <p><Label>Longitude</Label> {longitude ?? "unset"}</p>
-      <p><Label>Latitude</Label> {latitude ?? "unset"}</p>
-      {captureDate ? <p><Label>Capture Date</Label> {captureDate}</p> : undefined}
+      {captureDate ? <ul><Label>Capture Date</Label> {captureDate}</ul> : undefined}
+      <ul><Label>Longitude</Label> {longitude ?? "unset"}</ul>
+      <ul><Label>Latitude</Label> {latitude ?? "unset"}</ul>
     </Describe>
   </DetailsWrapper>;
 };
 
+export const TipsSection = () => (
+  <div style={{ height: "100%" }}>
+    <p className="h4">Tips:</p>
+    <Notes>
+      <li>Search for a location on the map, or <i>painfully</i> click and drag the map to the desired spot.</li>
+      <li>Select file to see some info about it.</li>
+      <li>You can apply an update to an <strong>individual file</strong>, or an <strong>entire directory</strong>.</li>
+      <li>We are only looking for <FileType>.jpg</FileType> and <FileType>.jpeg</FileType> files.</li>
+      <li>Files that include <FileType>.original.</FileType> will be ignored, and omitted from the list.</li>
+    </Notes>
+  </div>
+);
+
 const Notes = styled.ul`
-  list-style-type: disc;
+  list-style: disc;
   border-bottom: ${props => props.theme.insideBorder};
-  padding: 0.5rem 0.5rem 0;
+  //padding: 0.5rem 0.5rem 0;
+  padding-left: 2rem;
 `;
 
 const FileType = styled.strong`
@@ -57,7 +54,7 @@ const FileType = styled.strong`
   border-radius: 0.25rem;
 `;
 
-const Describe = styled.div`
+const Describe = styled.ul`
   padding-top: 0.75rem;
 `;
 
