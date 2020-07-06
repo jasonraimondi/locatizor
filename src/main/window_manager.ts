@@ -13,7 +13,7 @@ export class WindowManager {
     title: "photo Life",
     width: 1440,
     height: 900,
-    frame: false,
+    frame: !IS_MAC_OS,
     titleBarStyle: "hidden",
     resizable: true,
     backgroundColor: "#FFF",
