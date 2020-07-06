@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  builder:
+    image: electronuserland/builder:12
+    environment:
+      GH_TOKEN: "$GH_TOKEN"
+      ELECTRON_CACHE: /root/.cache/electron
+      ELECTRON_BUILDER_CACHE: /root/.cache/electron-builder
+    volumes:
+      - ./:/project
+      - ./node_modules:/project/node_modules
+      - ~/.cache/electron:/root/.cache/electron
+      - ~/.cache/electron-builder:/root/.cache/electron-builder
