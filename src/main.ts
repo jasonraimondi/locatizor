@@ -1,14 +1,20 @@
 import { app, Menu, ipcMain } from "electron";
+import { join } from "path";
+import { format } from "url";
 
 import { installExtensions, IS_DEV_ENV, IS_MAC_OS } from "@/environment";
 import { WindowManager } from "@/main/window_manager";
 import { getFiles } from "@/main/listeners/files_from_path";
 import { setGpsForPhoto, SetGpsArgs } from "@/main/listeners/set_gps";
-import { getExifFromPath } from "@/main/listeners/exif_from_path";
 import { COMMANDS } from "@/renderer/constants";
 import { Path } from "@/renderer/providers/path";
 
-const windowManager: WindowManager = new WindowManager();
+const mainWindowUrl = IS_DEV_ENV ? format(new URL("http://localhost:8080")) : format({
+    pathname: join(__dirname, "index.html"),
+    protocol: "file:",
+    slashes: true,
+  });
+const windowManager: WindowManager = new WindowManager(mainWindowUrl);
 
 export function openMainWindow() {
   windowManager.createMainWindow();
