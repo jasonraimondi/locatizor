@@ -1,5 +1,5 @@
 import type { MessageBoxOptions } from "electron";
-import { ipcRenderer, nativeImage } from "electron";
+import { BrowserWindow, ipcRenderer, nativeImage } from "electron";
 import { LatLngTuple } from "leaflet";
 import React, { createContext, useContext, useMemo, useState } from "react";
 import { pin } from "zondicons";
@@ -73,7 +73,8 @@ export const MapProvider = (props: any) => {
     ${shortPath}`,
     };
 
-    const { response } = await dialog.showMessageBox(null, options);
+    const box = new BrowserWindow()
+    const { response } = await dialog.showMessageBox(box, options);
     if (!response) return;
     ipcRenderer.send(COMMANDS.SetGPS, { path: fullPath, lat, lng, });
   };

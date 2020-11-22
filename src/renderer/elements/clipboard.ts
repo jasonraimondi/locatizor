@@ -1,5 +1,18 @@
-const remote = window.require("electron").remote;
-const {dialog, clipboard} = remote;
+import Electron from "electron";
 
-export const getClipboardText = () => clipboard.readText();
+export function isRenderer() {
+  // running in a web browser
+  if (typeof process === "undefined") return true;
+
+  // node-integration is disabled
+  if (!process) return true;
+
+  // We're in node.js somehow
+  if (!process.type) return false;
+
+  return process.type === "renderer";
+}
+
+const { dialog } = isRenderer() ? Electron.remote : Electron;
+
 export { dialog };

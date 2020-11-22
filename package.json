@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.10",
-    "@types/electron-settings": "^3.1.1",
+    "@types/electron-settings": "^3.1.2",
     "@types/jest": "^25.2.3",
     "@types/lodash.findkey": "^4.6.6",
     "@types/lodash.merge": "^4.6.6",
@@ -48,10 +48,10 @@
     "dayjs": "^1.8.27",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^1.8.0",
-    "electron": "^8.3.0",
-    "electron-builder": "^22.6.1",
+    "electron": "^11.0.2",
+    "electron-builder": "^22.9.1",
     "electron-devtools-installer": "^2.2.4",
-    "electron-updater": "^4.3.1",
+    "electron-updater": "^4.3.5",
     "file-loader": "^5.1.0",
     "html-webpack-plugin": "^3.2.0",
     "inter-ui": "^3.13.1",
@@ -86,7 +86,7 @@
     "zondicons": "^1.2.0"
   },
   "dependencies": {
-    "electron-settings": "^3.2.0",
+    "electron-settings": "^4.0.2",
     "piexifjs": "^2.0.0-beta.9"
   }
 }

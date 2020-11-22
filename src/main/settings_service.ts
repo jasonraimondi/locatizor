@@ -10,23 +10,23 @@ type JsonValue = string | number | boolean | null | JsonArray | JsonObject;
 
 export class ElectronSettingService {
   static has(keyPath: string): boolean {
-    return settings.has(keyPath);
+    return settings.hasSync(keyPath);
   }
 
-  static set<T>(keyPath: string, value: JsonValue | T | any, options?: any): void {
-    settings.set(keyPath, value, options);
+  static set<T>(keyPath: string, value: JsonValue | T | any): void {
+    settings.setSync(keyPath, value);
   }
 
-  static get<T>(keyPath: string, defaultValue?: any, options?: any): T | any {
-    return settings.get(keyPath, defaultValue, options);
+  static get<T>(keyPath: string, defaultValue?: any): T | any {
+    return settings.getSync(keyPath) ?? defaultValue;
   }
 
-  static delete(keyPath: string, options?: any): void {
-    settings.delete(keyPath, options);
+  static delete(keyPath: string): void {
+    settings.unsetSync(keyPath);
   }
 
-  static deleteAll(options?: any): void {
-    settings.deleteAll(options);
+  static deleteAll(): void {
+    settings.reset();
   }
 
   static file(): string {

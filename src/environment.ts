@@ -1,5 +1,5 @@
 // @ts-ignore
-import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
+// import installExtension, { REACT_DEVELOPER_TOOLS } from "electron-devtools-installer";
 
 export const IS_MAC_OS = process.platform === "darwin";
 
@@ -13,8 +13,8 @@ declare global {
 
 export async function installExtensions() {
   try {
-    const reactDevTools = await installExtension(REACT_DEVELOPER_TOOLS);
-    console.log(`installed ${reactDevTools}`);
+    // const reactDevTools = await installExtension(REACT_DEVELOPER_TOOLS);
+    // console.log(`installed ${reactDevTools}`);
   } catch (err) {
     console.log("An error occurred: ", err);
   }

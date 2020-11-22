@@ -8,6 +8,7 @@ console.log("NODE ENV", process.env.NODE_ENV);
 
 console.log(process.platform === "darwin" ? "hidden" : "default");
 
+
 export class WindowManager {
   private readonly DEFAULT_OPTIONS: BrowserWindowConstructorOptions = {
     title: "photo Life",
@@ -21,6 +22,7 @@ export class WindowManager {
     minWidth: 500,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true // <-- Add me
     },
   };
   private windows: Map<string, BrowserWindow> = new Map();
